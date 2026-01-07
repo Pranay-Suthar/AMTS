@@ -1,0 +1,817 @@
+[
+    {
+        "bus_number": "56",
+        "stops": [
+            {
+                "name": "Naroda",
+                "coordinates": [
+                    23.06424,
+                    72.64280
+                ]
+            },
+            {
+                "name": "Krishna Nagar",
+                "coordinates": [
+                    23.05705,
+                    72.64326
+                ]
+            },
+            {
+                "name": "Bajrang Ashram",
+                "coordinates": [
+                    23.04768,
+                    72.64113
+                ]
+            },
+            {
+                "name": "Thakkar Nagar",
+                "coordinates": [
+                    23.03910,
+                    72.63885
+                ]
+            },
+            {
+                "name": "Bapu Nagar Char Rasta",
+                "coordinates": [
+                    23.03495,
+                    72.62937
+                ]
+            },
+            {
+                "name": "Bombay Housing",
+                "coordinates": [
+                    23.03504,
+                    72.61747
+                ]
+            },
+            {
+                "name": "Sharda Ben",
+                "coordinates": [
+                    23.03180,
+                    72.61150
+                ]
+            },
+            {
+                "name": "Kalupur",
+                "coordinates": [
+                    23.03017,
+                    72.60041
+                ]
+            },
+            {
+                "name": "Sarangpur",
+                "coordinates": [
+                    23.02396,
+                    72.59961
+                ]
+            },
+            {
+                "name": "Raipur",
+                "coordinates": [
+                    23.01696,
+                    72.59397
+                ]
+            },
+            {
+                "name": "Lal Darwaja",
+                "coordinates": [
+                    23.02458,
+                    72.57865
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "31_5",
+        "stops": [
+            {
+                "name": "Lal Darwaja",
+                "coordinates": [
+                    23.02458,
+                    72.57865
+                ]
+            },
+            {
+                "name": "VS Hospital",
+                "coordinates": [
+                    23.02163,
+                    72.57138
+                ]
+            },
+            {
+                "name": "Anjali Char Rasta",
+                "coordinates": [
+                    23.00315,
+                    72.55187
+                ]
+            },
+            {
+                "name": "Vasna",
+                "coordinates": [
+                    23.00180,
+                    72.54801
+                ]
+            },
+            {
+                "name": "Vishala",
+                "coordinates": [
+                    22.99528,
+                    72.53205
+                ]
+            },
+            {
+                "name": "Khursid Park",
+                "coordinates": [
+                    22.99112,
+                    72.51860
+                ]
+            },
+            {
+                "name": "Ambar Tower",
+                "coordinates": [
+                    22.98896,
+                    72.51259
+                ]
+            },
+            {
+                "name": "Sarkhej",
+                "coordinates": [
+                    22.98752,
+                    72.50353
+                ]
+            },
+            {
+                "name": "Ujala",
+                "coordinates": [
+                    22.98042,
+                    72.49255
+                ]
+            },
+            {
+                "name": "Sanand Chowkdi",
+                "coordinates": [
+                    22.98701,
+                    72.49388
+                ]
+            },
+            {
+                "name": "LJ College",
+                "coordinates": [
+                    22.98712,
+                    72.48893
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "130",
+        "stops": [
+            {
+                "name": "Naroda",
+                "coordinates": [
+                    23.06424,
+                    72.64280
+                ]
+            },
+            {
+                "name": "Krishna Nagar",
+                "coordinates": [
+                    23.05705,
+                    72.64326
+                ]
+            },
+            {
+                "name": "Vijay Park",
+                "coordinates": [
+                    23.05123,
+                    72.64201
+                ]
+            },
+            {
+                "name": "Bajrang Ashram",
+                "coordinates": [
+                    23.04768,
+                    72.64113
+                ]
+            },
+            {
+                "name": "Khodiyar Nagar",
+                "coordinates": [
+                    23.03268,
+                    72.63918
+                ]
+            },
+            {
+                "name": "Soni ni Chali",
+                "coordinates": [
+                    23.02203,
+                    72.63830
+                ]
+            },
+            {
+                "name": "Rabari Colony",
+                "coordinates": [
+                    23.00433,
+                    72.63713
+                ]
+            },
+            {
+                "name": "Purvadeep Society",
+                "coordinates": [
+                    22.99605,
+                    72.63437
+                ]
+            },
+            {
+                "name": "Jashoda Nagar",
+                "coordinates": [
+                    22.98375,
+                    72.62412
+                ]
+            },
+            {
+                "name": "Ghodasar",
+                "coordinates": [
+                    22.97839,
+                    72.61015
+                ]
+            },
+            {
+                "name": "Isanpur",
+                "coordinates": [
+                    22.97552,
+                    72.60076
+                ]
+            },
+            {
+                "name": "Narol",
+                "coordinates": [
+                    22.97288,
+                    72.58951
+                ]
+            },
+            {
+                "name": "Chandola",
+                "coordinates": [
+                    22.98203,
+                    72.58568
+                ]
+            },
+            {
+                "name": "Danilimda",
+                "coordinates": [
+                    22.99608,
+                    72.57912
+                ]
+            },
+            {
+                "name": "Chadra Nagar",
+                "coordinates": [
+                    22.99980,
+                    72.55804
+                ]
+            },
+            {
+                "name": "Anjali Char Rasta",
+                "coordinates": [
+                    23.00315,
+                    72.55187
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "33",
+        "stops": [
+            {
+                "name": "Gokul Park",
+                "coordinates": [
+                    23.03145,
+                    72.65191
+                ]
+            },
+            {
+                "name": "Gandhi Park",
+                "coordinates": [
+                    23.02777,
+                    72.64104
+                ]
+            },
+            {
+                "name": "Khodiyar Nagar",
+                "coordinates": [
+                    23.03268,
+                    72.63918
+                ]
+            },
+            {
+                "name": "Bapu Nagar",
+                "coordinates": [
+                    23.03388,
+                    72.63406
+                ]
+            },
+            {
+                "name": "Bapu Nagar Char Rasta",
+                "coordinates": [
+                    23.03495,
+                    72.62937
+                ]
+            },
+            {
+                "name": "Bombay Housing",
+                "coordinates": [
+                    23.03504,
+                    72.61747
+                ]
+            },
+            {
+                "name": "Sharda Ben",
+                "coordinates": [
+                    23.03180,
+                    72.61150
+                ]
+            },
+            {
+                "name": "Kalupur",
+                "coordinates": [
+                    23.03017,
+                    72.60041
+                ]
+            },
+            {
+                "name": "Sarangpur",
+                "coordinates": [
+                    23.02396,
+                    72.59961
+                ]
+            },
+            {
+                "name": "Raipur",
+                "coordinates": [
+                    23.01696,
+                    72.59397
+                ]
+            },
+            {
+                "name": "MNC",
+                "coordinates": [
+                    23.01971,
+                    72.58615
+                ]
+            },
+            {
+                "name": "Lal Darwaja",
+                "coordinates": [
+                    23.02458,
+                    72.57865
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "58",
+        "stops": [
+            {
+                "name": "Thakkar Nagar",
+                "coordinates": [
+                    23.03910,
+                    72.63885
+                ]
+            },
+            {
+                "name": "India Colony",
+                "coordinates": [
+                    23.03869,
+                    72.63423
+                ]
+            },
+            {
+                "name": "Vijay Chowk",
+                "coordinates": [
+                    23.03863,
+                    72.63121
+                ]
+            },
+            {
+                "name": "Bapu Nagar Char Rasta",
+                "coordinates": [
+                    23.03495,
+                    72.62937
+                ]
+            },
+            {
+                "name": "Bombay Housing",
+                "coordinates": [
+                    23.03504,
+                    72.61747
+                ]
+            },
+            {
+                "name": "Sharda Ben",
+                "coordinates": [
+                    23.03180,
+                    72.61150
+                ]
+            },
+            {
+                "name": "Kalupur",
+                "coordinates": [
+                    23.03017,
+                    72.60041
+                ]
+            },
+            {
+                "name": "Sarangpur",
+                "coordinates": [
+                    23.02396,
+                    72.59961
+                ]
+            },
+            {
+                "name": "Raipur",
+                "coordinates": [
+                    23.01696,
+                    72.59397
+                ]
+            },
+            {
+                "name": "Gita Mandir",
+                "coordinates": [
+                    23.01483,
+                    72.59125
+                ]
+            },
+            {
+                "name": "Jamalpur",
+                "coordinates": [
+                    23.01063,
+                    72.57777
+                ]
+            },
+            {
+                "name": "Paldi",
+                "coordinates": [
+                    23.01370,
+                    72.56476
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "401",
+        "stops": [
+            {
+                "name": "Vasna Terminus",
+                "coordinates": [
+                    23.0075,
+                    72.5159
+                ]
+            },
+            {
+                "name": "Jawaharnagar",
+                "coordinates": [
+                    23.0180,
+                    72.5238
+                ]
+            },
+            {
+                "name": "Anjali Cinema",
+                "coordinates": [
+                    23.0235,
+                    72.5262
+                ]
+            },
+            {
+                "name": "Bhaththa (Vasna)",
+                "coordinates": [
+                    23.0288,
+                    72.5285
+                ]
+            },
+            {
+                "name": "Anandnagar",
+                "coordinates": [
+                    23.0350,
+                    72.5320
+                ]
+            },
+            {
+                "name": "Jain Merchant Society",
+                "coordinates": [
+                    23.0470,
+                    72.5410
+                ]
+            },
+            {
+                "name": "Mahalakshmi Society",
+                "coordinates": [
+                    23.0505,
+                    72.5445
+                ]
+            },
+            {
+                "name": "Paldi",
+                "coordinates": [
+                    23.0515,
+                    72.5405
+                ]
+            },
+            {
+                "name": "Pritamnagar",
+                "coordinates": [
+                    23.0535,
+                    72.5450
+                ]
+            },
+            {
+                "name": "Arvind Sales Emporium",
+                "coordinates": [
+                    23.0555,
+                    72.5475
+                ]
+            },
+            {
+                "name": "V.S Hospital",
+                "coordinates": [
+                    23.0565,
+                    72.5500
+                ]
+            },
+            {
+                "name": "Sanyas Ashram",
+                "coordinates": [
+                    23.0590,
+                    72.5550
+                ]
+            },
+            {
+                "name": "Gandhigram Metro Station",
+                "coordinates": [
+                    23.0610,
+                    72.5585
+                ]
+            },
+            {
+                "name": "Natraj Cinema",
+                "coordinates": [
+                    23.0635,
+                    72.5620
+                ]
+            },
+            {
+                "name": "Vallabh Sadan",
+                "coordinates": [
+                    23.0655,
+                    72.5645
+                ]
+            },
+            {
+                "name": "Mill Owners Association",
+                "coordinates": [
+                    23.0670,
+                    72.5670
+                ]
+            },
+            {
+                "name": "Mount Carmel School",
+                "coordinates": [
+                    23.0690,
+                    72.5690
+                ]
+            },
+            {
+                "name": "Income Tax Office",
+                "coordinates": [
+                    23.0710,
+                    72.5710
+                ]
+            },
+            {
+                "name": "Usmanpura",
+                "coordinates": [
+                    23.0730,
+                    72.5725
+                ]
+            },
+            {
+                "name": "Champaner Society",
+                "coordinates": [
+                    23.0750,
+                    72.5750
+                ]
+            },
+            {
+                "name": "Vadaj",
+                "coordinates": [
+                    23.0785,
+                    72.5775
+                ]
+            },
+            {
+                "name": "Collector Office",
+                "coordinates": [
+                    23.0810,
+                    72.5800
+                ]
+            },
+            {
+                "name": "Keshavnagar Tanki",
+                "coordinates": [
+                    23.0830,
+                    72.5820
+                ]
+            },
+            {
+                "name": "Railway River Bridge",
+                "coordinates": [
+                    23.0850,
+                    72.5840
+                ]
+            },
+            {
+                "name": "Railway Over Bridge",
+                "coordinates": [
+                    23.0870,
+                    72.5860
+                ]
+            },
+            {
+                "name": "Chandkheda Gam",
+                "coordinates": [
+                    23.0890,
+                    72.5880
+                ]
+            },
+            {
+                "name": "Siddhi Complex",
+                "coordinates": [
+                    23.0910,
+                    72.5895
+                ]
+            },
+            {
+                "name": "Chandkheda (Sarathi Bunglows)",
+                "coordinates": [
+                    23.0930,
+                    72.5910
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "Example 101",
+        "stops": [
+            {
+                "name": "Maninagar",
+                "coordinates": [
+                    23.0006,
+                    72.6006
+                ]
+            },
+            {
+                "name": "Kankaria Lake",
+                "coordinates": [
+                    23.0065,
+                    72.6026
+                ]
+            },
+            {
+                "name": "Geeta Mandir",
+                "coordinates": [
+                    23.01483,
+                    72.59125
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "11",
+        "stops": [
+            {
+                "name": "Vadaj",
+                "coordinates": [
+                    23.0785,
+                    72.5775
+                ]
+            },
+            {
+                "name": "Champaner Society",
+                "coordinates": [
+                    23.0750,
+                    72.5750
+                ]
+            },
+            {
+                "name": "Usmanpura",
+                "coordinates": [
+                    23.0730,
+                    72.5725
+                ]
+            },
+            {
+                "name": "Income Tax Office",
+                "coordinates": [
+                    23.0710,
+                    72.5710
+                ]
+            },
+            {
+                "name": "Ashram Road",
+                "coordinates": [
+                    23.0650,
+                    72.5660
+                ]
+            },
+            {
+                "name": "Gandhigram",
+                "coordinates": [
+                    23.0610,
+                    72.5585
+                ]
+            },
+            {
+                "name": "Paldi",
+                "coordinates": [
+                    23.0515,
+                    72.5405
+                ]
+            },
+            {
+                "name": "Kankaria Lake",
+                "coordinates": [
+                    23.0103,
+                    72.6002
+                ]
+            },
+            {
+                "name": "Maninagar",
+                "coordinates": [
+                    22.9963,
+                    72.6032
+                ]
+            }
+        ]
+    },
+    {
+        "bus_number": "89",
+        "stops": [
+            {
+                "name": "Chandkheda Gam",
+                "coordinates": [
+                    23.0890,
+                    72.5880
+                ]
+            },
+            {
+                "name": "Motera Stadium",
+                "coordinates": [
+                    23.0917,
+                    72.5972
+                ]
+            },
+            {
+                "name": "Sabarmati",
+                "coordinates": [
+                    23.0830,
+                    72.5810
+                ]
+            },
+            {
+                "name": "Usmanpura",
+                "coordinates": [
+                    23.0730,
+                    72.5725
+                ]
+            },
+            {
+                "name": "Navrangpura",
+                "coordinates": [
+                    23.0375,
+                    72.5610
+                ]
+            },
+            {
+                "name": "University Area",
+                "coordinates": [
+                    23.0365,
+                    72.5535
+                ]
+            },
+            {
+                "name": "Vastrapur Lake",
+                "coordinates": [
+                    23.0352,
+                    72.5298
+                ]
+            },
+            {
+                "name": "Vastrapur",
+                "coordinates": [
+                    23.0378,
+                    72.5285
+                ]
+            }
+        ]
+    }
+]
