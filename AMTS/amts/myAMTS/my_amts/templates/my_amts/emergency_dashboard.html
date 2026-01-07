@@ -1,0 +1,414 @@
+{% extends 'my_amts/base.html' %}
+{% load static %}
+
+{% block title %}Emergency Dashboard - AMTS{% endblock %}
+
+{% block extra_css %}
+<style>
+    .emergency-dashboard {
+        background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+    
+    .emergency-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        padding: 30px;
+        margin-bottom: 20px;
+    }
+    
+    .emergency-header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+    }
+    
+    .emergency-header h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .emergency-btn {
+        background: linear-gradient(45deg, #f44336, #d32f2f);
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .emergency-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(244, 67, 54, 0.6);
+        color: white;
+    }
+    
+    .emergency-btn:active {
+        transform: translateY(0);
+    }
+    
+    .emergency-btn.processing {
+        background: linear-gradient(45deg, #ff9800, #f57c00);
+        cursor: not-allowed;
+    }
+    
+    .bus-selector {
+        margin-bottom: 20px;
+    }
+    
+    .bus-selector select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1.1rem;
+    }
+    
+    .location-input {
+        margin-bottom: 20px;
+    }
+    
+    .location-input input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    
+    .emergency-status {
+        display: none;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+    
+    .status-success {
+        background: #e8f5e8;
+        border: 2px solid #4caf50;
+        color: #2e7d32;
+    }
+    
+    .status-error {
+        background: #ffebee;
+        border: 2px solid #f44336;
+        color: #c62828;
+    }
+    
+    .status-processing {
+        background: #fff3e0;
+        border: 2px solid #ff9800;
+        color: #ef6c00;
+    }
+    
+    .notification-summary {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+    
+    .notification-summary h5 {
+        color: #1a237e;
+        margin-bottom: 10px;
+    }
+    
+    .notification-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .notification-item:last-child {
+        border-bottom: none;
+    }
+    
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .emergency-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        animation: flash 1s infinite;
+    }
+    
+    @keyframes flash {
+        0%, 50% { opacity: 1; }
+        25%, 75% { opacity: 0.5; }
+    }
+    
+    .info-card {
+        background: #e3f2fd;
+        border: 1px solid #2196f3;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .info-card h6 {
+        color: #1976d2;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="emergency-dashboard">
+    <div class="container">
+        <div class="emergency-header">
+            <div class="emergency-icon">🚨</div>
+            <h1>EMERGENCY ACCIDENT ALERT SYSTEM</h1>
+            <p class="lead">AMTS Emergency Response Dashboard</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="emergency-card">
+                    <h3 class="text-center mb-4">🚌 Bus Accident Emergency Protocol</h3>
+                    
+                    <div class="info-card">
+                        <h6>📋 Emergency System Features:</h6>
+                        <ul class="mb-0">
+                            <li>✅ Instantly freeze bus at GPS location</li>
+                            <li>✅ Send emergency emails to 40 random family members</li>
+                            <li>✅ Notify all passengers with bookings on the bus</li>
+                            <li>✅ Alert emergency helplines and control room</li>
+                            <li>✅ Generate Google Maps location link</li>
+                            <li>✅ Log all notifications for audit trail</li>
+                        </ul>
+                    </div>
+                    
+                    <form id="emergencyForm">
+                        <div class="bus-selector">
+                            <label for="busNumber" class="form-label"><strong>🚌 Select Bus Number:</strong></label>
+                            <select id="busNumber" class="form-select" required>
+                                <option value="">Choose a bus...</option>
+                                <option value="45">Bus 45 (Paldi ↔ Maninagar)</option>
+                                <option value="101">Bus 101 (Ahmedabad Railway Station ↔ Sarkhej)</option>
+                                <option value="130">Bus 130 (Iscon ↔ Vatva)</option>
+                                <option value="42">Bus 42 (Bopal ↔ Kalupur)</option>
+                                <option value="85">Bus 85 (Satellite ↔ CTM)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="location-input">
+                            <label class="form-label"><strong>📍 Accident Location:</strong></label>
+                            <input type="text" id="accidentLocation" class="form-control" 
+                                   placeholder="e.g., Near Paldi Bus Stop, Ahmedabad" required>
+                            <input type="number" id="latitude" class="form-control" 
+                                   placeholder="Latitude (e.g., 23.0225)" step="any" required>
+                            <input type="number" id="longitude" class="form-control" 
+                                   placeholder="Longitude (e.g., 72.5714)" step="any" required>
+                        </div>
+                        
+                        <button type="submit" id="emergencyBtn" class="emergency-btn">
+                            🚨 TRIGGER EMERGENCY ALERT SYSTEM 🚨
+                        </button>
+                        
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                ⚠️ This will immediately send emergency notifications to passengers and families
+                            </small>
+                        </div>
+                    </form>
+                    
+                    <div id="emergencyStatus" class="emergency-status">
+                        <div id="statusContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="emergency-card">
+                    <h4 class="text-center mb-4">🧪 Test Emergency System</h4>
+                    <p class="text-center">Use the button below to test the system with sample data:</p>
+                    
+                    <button id="testBtn" class="btn btn-outline-primary w-100 mb-3">
+                        🧪 Run Test with Sample Data
+                    </button>
+                    
+                    <div class="info-card">
+                        <h6>📧 Email Configuration (Localhost):</h6>
+                        <p class="mb-1"><strong>Backend:</strong> Console (emails logged to terminal)</p>
+                        <p class="mb-1"><strong>Emergency Helplines:</strong> 4 configured addresses</p>
+                        <p class="mb-0"><strong>Random Users:</strong> Up to 40 family notifications</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const emergencyForm = document.getElementById('emergencyForm');
+    const emergencyBtn = document.getElementById('emergencyBtn');
+    const emergencyStatus = document.getElementById('emergencyStatus');
+    const statusContent = document.getElementById('statusContent');
+    const testBtn = document.getElementById('testBtn');
+    
+    // Test button functionality
+    testBtn.addEventListener('click', function() {
+        document.getElementById('busNumber').value = '45';
+        document.getElementById('accidentLocation').value = 'Near Paldi Bus Stop, Ahmedabad';
+        document.getElementById('latitude').value = '23.0225';
+        document.getElementById('longitude').value = '72.5714';
+        
+        // Trigger the emergency alert
+        triggerEmergencyAlert();
+    });
+    
+    emergencyForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        triggerEmergencyAlert();
+    });
+    
+    function triggerEmergencyAlert() {
+        const busNumber = document.getElementById('busNumber').value;
+        const accidentLocation = document.getElementById('accidentLocation').value;
+        const latitude = document.getElementById('latitude').value;
+        const longitude = document.getElementById('longitude').value;
+        
+        if (!busNumber || !accidentLocation || !latitude || !longitude) {
+            showStatus('error', '❌ Please fill in all fields');
+            return;
+        }
+        
+        // Show processing status
+        emergencyBtn.classList.add('processing');
+        emergencyBtn.innerHTML = '🔄 ACTIVATING EMERGENCY SYSTEM...';
+        emergencyBtn.disabled = true;
+        
+        showStatus('processing', '🚨 Emergency system activating...<br>📧 Sending notifications...');
+        
+        // Send emergency alert
+        fetch('/api/emergency-accident/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                bus_number: busNumber,
+                accident_location: accidentLocation,
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude)
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const response = data.emergency_response;
+                const details = data.accident_details;
+                
+                let successHtml = `
+                    <h5>✅ EMERGENCY SYSTEM ACTIVATED SUCCESSFULLY</h5>
+                    <div class="notification-summary">
+                        <h6>📊 Notification Summary:</h6>
+                        <div class="notification-item">
+                            <span>📧 Total Emails Sent:</span>
+                            <strong>${response.notifications_sent}</strong>
+                        </div>
+                        <div class="notification-item">
+                            <span>👥 Affected Passengers:</span>
+                            <strong>${response.affected_passengers}</strong>
+                        </div>
+                        <div class="notification-item">
+                            <span>👨‍👩‍👧‍👦 Family Alerts:</span>
+                            <strong>${response.family_alerts_sent}</strong>
+                        </div>
+                        <div class="notification-item">
+                            <span>🚨 Helpline Alerts:</span>
+                            <strong>${response.helpline_alerts_sent}</strong>
+                        </div>
+                        <div class="notification-item">
+                            <span>🚌 Bus Status:</span>
+                            <strong>${response.bus_status}</strong>
+                        </div>
+                        <div class="notification-item">
+                            <span>📍 Location Frozen:</span>
+                            <strong>${response.location_frozen ? 'YES' : 'NO'}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h6>🚨 Accident Details:</h6>
+                        <p><strong>Bus:</strong> ${details.bus_number}</p>
+                        <p><strong>Route:</strong> ${details.route}</p>
+                        <p><strong>Location:</strong> ${details.location}</p>
+                        <p><strong>Time:</strong> ${details.timestamp}</p>
+                        <p><strong>Maps:</strong> <a href="${details.maps_link}" target="_blank">View on Google Maps</a></p>
+                    </div>
+                `;
+                
+                showStatus('success', successHtml);
+                
+                // Show success animation
+                emergencyBtn.classList.remove('processing');
+                emergencyBtn.classList.add('pulse-animation');
+                emergencyBtn.innerHTML = '✅ EMERGENCY SYSTEM ACTIVATED';
+                
+            } else {
+                showStatus('error', `❌ Emergency system failed: ${data.message}`);
+                resetButton();
+            }
+        })
+        .catch(error => {
+            console.error('Emergency system error:', error);
+            showStatus('error', `❌ System error: ${error.message}`);
+            resetButton();
+        });
+    }
+    
+    function showStatus(type, message) {
+        emergencyStatus.style.display = 'block';
+        emergencyStatus.className = `emergency-status status-${type}`;
+        statusContent.innerHTML = message;
+        
+        // Scroll to status
+        emergencyStatus.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function resetButton() {
+        emergencyBtn.classList.remove('processing', 'pulse-animation');
+        emergencyBtn.innerHTML = '🚨 TRIGGER EMERGENCY ALERT SYSTEM 🚨';
+        emergencyBtn.disabled = false;
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}

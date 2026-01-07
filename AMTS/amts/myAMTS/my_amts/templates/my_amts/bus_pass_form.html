@@ -1,0 +1,309 @@
+{% extends 'my_amts/base.html' %}
+
+{% block title %}{{ pass_type_display }} Application - AMTS{% endblock %}
+
+{% block extra_css %}
+<style>
+    .pass-form-container {
+        max-width: 900px;
+        margin: 3rem auto;
+        padding: 2rem;
+    }
+
+    .pass-header {
+        background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+    }
+
+    .pass-header h2 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .pass-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }
+
+    .pass-form {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-section {
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .form-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .section-title {
+        color: #1a237e;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title i {
+        color: #2196F3;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control,
+    .form-select {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #2196F3;
+        box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+    }
+
+    .required-field::after {
+        content: " *";
+        color: #e53935;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+        color: white;
+        padding: 1rem 3rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(26, 35, 126, 0.4);
+        color: white;
+    }
+
+    .student-fields {
+        display: none;
+    }
+
+    .success-message {
+        background: #4caf50;
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        display: none;
+    }
+
+    .error-message {
+        background: #f44336;
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container pass-form-container">
+    <div class="pass-header">
+        <h2>🎫 {{ pass_type_display }} Application</h2>
+        <p>Ahmedabad Municipal Transport Service (AMTS)</p>
+    </div>
+
+    <div class="pass-form">
+        <div class="success-message" id="successMessage"></div>
+        <div class="error-message" id="errorMessage"></div>
+
+        <form id="passForm" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="pass_type" value="{{ pass_type }}">
+
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Personal Information
+                </h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">Full Name</label>
+                        <input type="text" class="form-control" name="full_name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">Date of Birth</label>
+                        <input type="date" class="form-control" name="date_of_birth" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">Gender</label>
+                        <select class="form-select" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="O">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">Phone Number</label>
+                        <input type="tel" class="form-control" name="phone_number" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label required-field">Email</label>
+                        <input type="email" class="form-control" name="email" required value="{{ user.email }}">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label required-field">Address</label>
+                        <textarea class="form-control" name="address" rows="3" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Route Information -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-route"></i>
+                    Route Information
+                </h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">From Stop</label>
+                        <input type="text" class="form-control" name="from_stop" required
+                            placeholder="e.g., Lal Darwaja">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">To Stop</label>
+                        <input type="text" class="form-control" name="to_stop" required placeholder="e.g., Bopal">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label required-field">Route Number</label>
+                        <input type="text" class="form-control" name="route_number" required placeholder="e.g., 45">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Information (Only for Student Pass) -->
+            {% if pass_type == 'student' %}
+            <div class="form-section student-fields" style="display: block;">
+                <h3 class="section-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    Student Information
+                </h3>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label required-field">School/College Name</label>
+                        <input type="text" class="form-control" name="school_college_name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">Student ID</label>
+                        <input type="text" class="form-control" name="student_id" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required-field">Class/Year</label>
+                        <input type="text" class="form-control" name="class_year" required
+                            placeholder="e.g., 10th Standard, 2nd Year">
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Terms and Conditions -->
+            <div class="form-section">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                    <label class="form-check-label" for="termsCheck">
+                        I hereby declare that the information provided above is true and correct to the best of my
+                        knowledge.
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-submit">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Submit Application & Generate PDF
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('passForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const submitBtn = this.querySelector('.btn-submit');
+        const originalText = submitBtn.innerHTML;
+
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+
+        try {
+            const response = await fetch('/api/submit-bus-pass/', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                // Show success message
+                document.getElementById('successMessage').innerHTML = `
+                <i class="fas fa-check-circle me-2"></i>
+                ${data.message}<br>
+                <strong>Pass ID:</strong> ${data.pass_id}<br>
+                <a href="${data.pdf_url}" class="btn btn-light mt-2" download>
+                    <i class="fas fa-download me-2"></i>Download PDF
+                </a>
+            `;
+                document.getElementById('successMessage').style.display = 'block';
+
+                // Reset form
+                this.reset();
+
+                // Auto-download PDF
+                window.open(data.pdf_url, '_blank');
+
+                // Scroll to success message
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // Show error message
+                document.getElementById('errorMessage').textContent = data.message;
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        } catch (error) {
+            document.getElementById('errorMessage').textContent = 'An error occurred. Please try again.';
+            document.getElementById('errorMessage').style.display = 'block';
+        } finally {
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
+    });
+</script>
+{% endblock %}

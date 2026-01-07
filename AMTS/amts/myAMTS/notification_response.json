@@ -1,0 +1,540 @@
+{
+  "status": "success",
+  "total_selected": 40,
+  "sms_sent": 0,
+  "sms_simulated": 40,
+  "sms_failed": 0,
+  "passengers": [
+    {
+      "user_id": 7,
+      "username": "Sam",
+      "name": "Sam",
+      "email": "samarthpatel310106@gmail.com",
+      "phone": "9364998161",
+      "notified": true
+    },
+    {
+      "user_id": 36,
+      "username": "testuser26",
+      "name": "Test User 26",
+      "email": "testuser26@example.com",
+      "phone": "9601426159",
+      "notified": true
+    },
+    {
+      "user_id": 20,
+      "username": "testuser10",
+      "name": "Test User 10",
+      "email": "testuser10@example.com",
+      "phone": "9004889636",
+      "notified": true
+    },
+    {
+      "user_id": 24,
+      "username": "testuser14",
+      "name": "Test User 14",
+      "email": "testuser14@example.com",
+      "phone": "9268966969",
+      "notified": true
+    },
+    {
+      "user_id": 26,
+      "username": "testuser16",
+      "name": "Test User 16",
+      "email": "testuser16@example.com",
+      "phone": "9076151923",
+      "notified": true
+    },
+    {
+      "user_id": 30,
+      "username": "testuser20",
+      "name": "Test User 20",
+      "email": "testuser20@example.com",
+      "phone": "9257839104",
+      "notified": true
+    },
+    {
+      "user_id": 41,
+      "username": "testuser31",
+      "name": "Test User 31",
+      "email": "testuser31@example.com",
+      "phone": "9646642060",
+      "notified": true
+    },
+    {
+      "user_id": 19,
+      "username": "testuser9",
+      "name": "Test User 9",
+      "email": "testuser9@example.com",
+      "phone": "9944902022",
+      "notified": true
+    },
+    {
+      "user_id": 42,
+      "username": "testuser32",
+      "name": "Test User 32",
+      "email": "testuser32@example.com",
+      "phone": "9852023696",
+      "notified": true
+    },
+    {
+      "user_id": 12,
+      "username": "testuser2",
+      "name": "Test User 2",
+      "email": "testuser2@example.com",
+      "phone": "9579554128",
+      "notified": true
+    },
+    {
+      "user_id": 37,
+      "username": "testuser27",
+      "name": "Test User 27",
+      "email": "testuser27@example.com",
+      "phone": "9289489474",
+      "notified": true
+    },
+    {
+      "user_id": 40,
+      "username": "testuser30",
+      "name": "Test User 30",
+      "email": "testuser30@example.com",
+      "phone": "9797170220",
+      "notified": true
+    },
+    {
+      "user_id": 23,
+      "username": "testuser13",
+      "name": "Test User 13",
+      "email": "testuser13@example.com",
+      "phone": "9923209386",
+      "notified": true
+    },
+    {
+      "user_id": 14,
+      "username": "testuser4",
+      "name": "Test User 4",
+      "email": "testuser4@example.com",
+      "phone": "9237818673",
+      "notified": true
+    },
+    {
+      "user_id": 4,
+      "username": "harsha",
+      "name": "harsha",
+      "email": "dharmitpatel98@gmail.com",
+      "phone": "9743004958",
+      "notified": true
+    },
+    {
+      "user_id": 9,
+      "username": "demo_user",
+      "name": "demo_user",
+      "email": "demo@example.com",
+      "phone": "9612865791",
+      "notified": true
+    },
+    {
+      "user_id": 34,
+      "username": "testuser24",
+      "name": "Test User 24",
+      "email": "testuser24@example.com",
+      "phone": "9000204535",
+      "notified": true
+    },
+    {
+      "user_id": 28,
+      "username": "testuser18",
+      "name": "Test User 18",
+      "email": "testuser18@example.com",
+      "phone": "9633195878",
+      "notified": true
+    },
+    {
+      "user_id": 38,
+      "username": "testuser28",
+      "name": "Test User 28",
+      "email": "testuser28@example.com",
+      "phone": "9352464258",
+      "notified": true
+    },
+    {
+      "user_id": 21,
+      "username": "testuser11",
+      "name": "Test User 11",
+      "email": "testuser11@example.com",
+      "phone": "9287799675",
+      "notified": true
+    },
+    {
+      "user_id": 2,
+      "username": "ayush",
+      "name": "ayush",
+      "email": "ayushgodhani003@gmail.com",
+      "phone": "9585270748",
+      "notified": true
+    },
+    {
+      "user_id": 3,
+      "username": "dharmit",
+      "name": "dharmit",
+      "email": "pap58942@gmail.com",
+      "phone": "9366333192",
+      "notified": true
+    },
+    {
+      "user_id": 11,
+      "username": "testuser1",
+      "name": "Test User 1",
+      "email": "testuser1@example.com",
+      "phone": "9079835411",
+      "notified": true
+    },
+    {
+      "user_id": 27,
+      "username": "testuser17",
+      "name": "Test User 17",
+      "email": "testuser17@example.com",
+      "phone": "9426829892",
+      "notified": true
+    },
+    {
+      "user_id": 25,
+      "username": "testuser15",
+      "name": "Test User 15",
+      "email": "testuser15@example.com",
+      "phone": "9881357951",
+      "notified": true
+    },
+    {
+      "user_id": 31,
+      "username": "testuser21",
+      "name": "Test User 21",
+      "email": "testuser21@example.com",
+      "phone": "9150945612",
+      "notified": true
+    },
+    {
+      "user_id": 18,
+      "username": "testuser8",
+      "name": "Test User 8",
+      "email": "testuser8@example.com",
+      "phone": "9521447782",
+      "notified": true
+    },
+    {
+      "user_id": 17,
+      "username": "testuser7",
+      "name": "Test User 7",
+      "email": "testuser7@example.com",
+      "phone": "9335812241",
+      "notified": true
+    },
+    {
+      "user_id": 22,
+      "username": "testuser12",
+      "name": "Test User 12",
+      "email": "testuser12@example.com",
+      "phone": "9054666843",
+      "notified": true
+    },
+    {
+      "user_id": 13,
+      "username": "testuser3",
+      "name": "Test User 3",
+      "email": "testuser3@example.com",
+      "phone": "9267238802",
+      "notified": true
+    },
+    {
+      "user_id": 10,
+      "username": "testuser123",
+      "name": "testuser123",
+      "email": "testuser123@example.com",
+      "phone": "9979435462",
+      "notified": true
+    },
+    {
+      "user_id": 33,
+      "username": "testuser23",
+      "name": "Test User 23",
+      "email": "testuser23@example.com",
+      "phone": "9711160506",
+      "notified": true
+    },
+    {
+      "user_id": 16,
+      "username": "testuser6",
+      "name": "Test User 6",
+      "email": "testuser6@example.com",
+      "phone": "9022191851",
+      "notified": true
+    },
+    {
+      "user_id": 29,
+      "username": "testuser19",
+      "name": "Test User 19",
+      "email": "testuser19@example.com",
+      "phone": "9559274333",
+      "notified": true
+    },
+    {
+      "user_id": 32,
+      "username": "testuser22",
+      "name": "Test User 22",
+      "email": "testuser22@example.com",
+      "phone": "9717091938",
+      "notified": true
+    },
+    {
+      "user_id": 5,
+      "username": "Manthan",
+      "name": "Manthan",
+      "email": "manthan07@gmail.com",
+      "phone": "9028333588",
+      "notified": true
+    },
+    {
+      "user_id": 15,
+      "username": "testuser5",
+      "name": "Test User 5",
+      "email": "testuser5@example.com",
+      "phone": "9943585718",
+      "notified": true
+    },
+    {
+      "user_id": 35,
+      "username": "testuser25",
+      "name": "Test User 25",
+      "email": "testuser25@example.com",
+      "phone": "9778563988",
+      "notified": true
+    },
+    {
+      "user_id": 8,
+      "username": "samarth",
+      "name": "samarth",
+      "email": "samarthpatel808@gmail.com",
+      "phone": "9958979709",
+      "notified": true
+    },
+    {
+      "user_id": 39,
+      "username": "testuser29",
+      "name": "Test User 29",
+      "email": "testuser29@example.com",
+      "phone": "9622868014",
+      "notified": true
+    }
+  ],
+  "accident_details": {
+    "bus_number": "45",
+    "route": "Route 45",
+    "location": "Near Sabarmati Railway Station",
+    "latitude": 23.0225,
+    "longitude": 72.5714,
+    "maps_link": "https://maps.google.com/?q=23.0225,72.5714",
+    "timestamp": "2025-12-29 19:33:11"
+  },
+  "sms_details": [
+    {
+      "name": "Sam",
+      "phone": "9364998161",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 26",
+      "phone": "9601426159",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 10",
+      "phone": "9004889636",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 14",
+      "phone": "9268966969",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 16",
+      "phone": "9076151923",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 20",
+      "phone": "9257839104",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 31",
+      "phone": "9646642060",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 9",
+      "phone": "9944902022",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 32",
+      "phone": "9852023696",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 2",
+      "phone": "9579554128",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 27",
+      "phone": "9289489474",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 30",
+      "phone": "9797170220",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 13",
+      "phone": "9923209386",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 4",
+      "phone": "9237818673",
+      "status": "simulated"
+    },
+    {
+      "name": "harsha",
+      "phone": "9743004958",
+      "status": "simulated"
+    },
+    {
+      "name": "demo_user",
+      "phone": "9612865791",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 24",
+      "phone": "9000204535",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 18",
+      "phone": "9633195878",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 28",
+      "phone": "9352464258",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 11",
+      "phone": "9287799675",
+      "status": "simulated"
+    },
+    {
+      "name": "ayush",
+      "phone": "9585270748",
+      "status": "simulated"
+    },
+    {
+      "name": "dharmit",
+      "phone": "9366333192",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 1",
+      "phone": "9079835411",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 17",
+      "phone": "9426829892",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 15",
+      "phone": "9881357951",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 21",
+      "phone": "9150945612",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 8",
+      "phone": "9521447782",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 7",
+      "phone": "9335812241",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 12",
+      "phone": "9054666843",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 3",
+      "phone": "9267238802",
+      "status": "simulated"
+    },
+    {
+      "name": "testuser123",
+      "phone": "9979435462",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 23",
+      "phone": "9711160506",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 6",
+      "phone": "9022191851",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 19",
+      "phone": "9559274333",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 22",
+      "phone": "9717091938",
+      "status": "simulated"
+    },
+    {
+      "name": "Manthan",
+      "phone": "9028333588",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 5",
+      "phone": "9943585718",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 25",
+      "phone": "9778563988",
+      "status": "simulated"
+    },
+    {
+      "name": "samarth",
+      "phone": "9958979709",
+      "status": "simulated"
+    },
+    {
+      "name": "Test User 29",
+      "phone": "9622868014",
+      "status": "simulated"
+    }
+  ]
+}
