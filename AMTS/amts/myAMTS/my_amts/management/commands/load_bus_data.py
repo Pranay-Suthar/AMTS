@@ -177,6 +177,239 @@ class Command(BaseCommand):
                         {"name": "Vastrapur Lake", "coordinates": [23.0352, 72.5298]},
                         {"name": "Vastrapur", "coordinates": [23.0378, 72.5285]}
                     ]
+                },
+                {
+                    "bus_number": "1",
+                    "stops": [
+                        {"name": "Maninagar", "coordinates": [22.9963, 72.6032]},
+                        {"name": "Star Bazar", "coordinates": [22.9985, 72.5945]},
+                        {"name": "ISRO BRTS Stop", "coordinates": [23.0125, 72.5685]},
+                        {"name": "Ramdev Nagar", "coordinates": [23.0185, 72.5425]},
+                        {"name": "ISKCON Cross Road", "coordinates": [23.0205, 72.5285]},
+                        {"name": "Bhavya Park", "coordinates": [23.0245, 72.5145]},
+                        {"name": "Samarpan Bungalow", "coordinates": [23.0285, 72.5025]},
+                        {"name": "Sterling City", "coordinates": [23.0315, 72.4905]},
+                        {"name": "Bopal Gam", "coordinates": [23.0325, 72.4785]},
+                        {"name": "Ghuma Gam", "coordinates": [23.0185, 72.4625]}
+                    ]
+                },
+                {
+                    "bus_number": "2",
+                    "stops": [
+                        {"name": "Science City Approach", "coordinates": [23.0625, 72.5025]},
+                        {"name": "Murlidhar Society", "coordinates": [22.9685, 72.6245]},
+                        {"name": "Odhav Talav", "coordinates": [22.9925, 72.6525]},
+                        {"name": "Sardar Patel Ring Road", "coordinates": [23.0125, 72.6685]}
+                    ]
+                },
+                {
+                    "bus_number": "3",
+                    "stops": [
+                        {"name": "R.T.O. Circle", "coordinates": [23.0645, 72.5925]},
+                        {"name": "Ranip Cross Road", "coordinates": [23.0685, 72.5845]},
+                        {"name": "Bhavsar Hostel", "coordinates": [23.0625, 72.5785]},
+                        {"name": "Akhbar Nagar", "coordinates": [23.0565, 72.5725]},
+                        {"name": "Pragati Nagar", "coordinates": [23.0485, 72.5685]},
+                        {"name": "Maninagar", "coordinates": [22.9963, 72.6032]}
+                    ]
+                },
+                {
+                    "bus_number": "4",
+                    "stops": [
+                        {"name": "Commerce Six Road", "coordinates": [23.0325, 72.5625]},
+                        {"name": "Panjra Pole Char Rasta", "coordinates": [23.0385, 72.5545]},
+                        {"name": "Gulbai Tekra Approach", "coordinates": [23.0425, 72.5485]},
+                        {"name": "L.D. Engineering College", "coordinates": [23.0465, 72.5425]},
+                        {"name": "Jundal", "coordinates": [23.0525, 72.5365]}
+                    ]
+                },
+                {
+                    "bus_number": "5",
+                    "stops": [
+                        {"name": "Naroda Terminus", "coordinates": [23.06424, 72.64280]},
+                        {"name": "Jogeshwari Society", "coordinates": [23.0585, 72.6385]},
+                        {"name": "C.T.M. Cross Road", "coordinates": [23.0425, 72.6325]},
+                        {"name": "Purvadeep Society", "coordinates": [22.99605, 72.63437]},
+                        {"name": "Jashodanagar Char Rasta", "coordinates": [22.98375, 72.62412]},
+                        {"name": "Danilimda Char Rasta", "coordinates": [22.99608, 72.57912]},
+                        {"name": "Khodiyarnagar", "coordinates": [23.03268, 72.63918]},
+                        {"name": "Chandranagar", "coordinates": [22.99980, 72.55804]},
+                        {"name": "Anjali", "coordinates": [23.00315, 72.55187]},
+                        {"name": "Vasna", "coordinates": [23.00180, 72.54801]}
+                    ]
+                },
+                {
+                    "bus_number": "28",
+                    "stops": [
+                        {"name": "Lambha Gam", "coordinates": [22.9525, 72.5685]},
+                        {"name": "Narol", "coordinates": [22.97288, 72.58951]},
+                        {"name": "Isanpur", "coordinates": [22.97552, 72.60076]},
+                        {"name": "Ghodasar", "coordinates": [22.97839, 72.61015]},
+                        {"name": "Maninagar", "coordinates": [22.9963, 72.6032]},
+                        {"name": "Netaji Nagar", "coordinates": [23.0125, 72.6185]}
+                    ]
+                },
+                {
+                    "bus_number": "49",
+                    "stops": [
+                        {"name": "Godhavi Gam", "coordinates": [23.0925, 72.5425]},
+                        {"name": "Sola", "coordinates": [23.0685, 72.5145]},
+                        {"name": "Science City", "coordinates": [23.0625, 72.5025]},
+                        {"name": "Thaltej", "coordinates": [23.0505, 72.5095]},
+                        {"name": "Bodakdev", "coordinates": [23.0385, 72.5195]},
+                        {"name": "Vastrapur", "coordinates": [23.0378, 72.5285]},
+                        {"name": "Navrangpura", "coordinates": [23.0375, 72.5610]},
+                        {"name": "Gujarat University", "coordinates": [23.0365, 72.5535]},
+                        {"name": "Adinath Nagar", "coordinates": [23.0285, 72.5785]}
+                    ]
+                },
+                {
+                    "bus_number": "50",
+                    "stops": [
+                        {"name": "Ghuma Gam", "coordinates": [23.0185, 72.4625]},
+                        {"name": "Bopal", "coordinates": [23.0325, 72.4785]},
+                        {"name": "Shilaj", "coordinates": [23.0425, 72.4895]},
+                        {"name": "Thaltej", "coordinates": [23.0505, 72.5095]},
+                        {"name": "Vastrapur", "coordinates": [23.0378, 72.5285]},
+                        {"name": "Paldi", "coordinates": [23.0515, 72.5405]},
+                        {"name": "Netaji Nagar", "coordinates": [23.0125, 72.6185]}
+                    ]
+                },
+                {
+                    "bus_number": "61",
+                    "stops": [
+                        {"name": "Gota", "coordinates": [23.1125, 72.5685]},
+                        {"name": "Sargasan", "coordinates": [23.1085, 72.5745]},
+                        {"name": "Vaishnodevi", "coordinates": [23.0985, 72.5805]},
+                        {"name": "Chandkheda", "coordinates": [23.0890, 72.5880]},
+                        {"name": "Sabarmati", "coordinates": [23.0830, 72.5810]},
+                        {"name": "Ranip", "coordinates": [23.0645, 72.5925]},
+                        {"name": "Kalupur", "coordinates": [23.03017, 72.60041]}
+                    ]
+                },
+                {
+                    "bus_number": "66",
+                    "stops": [
+                        {"name": "Satellite", "coordinates": [23.0258, 72.5098]},
+                        {"name": "Jodhpur", "coordinates": [23.0305, 72.5145]},
+                        {"name": "Bodakdev", "coordinates": [23.0385, 72.5195]},
+                        {"name": "Vastrapur", "coordinates": [23.0378, 72.5285]},
+                        {"name": "Navrangpura", "coordinates": [23.0375, 72.5610]},
+                        {"name": "C.G. Road", "coordinates": [23.0295, 72.5565]},
+                        {"name": "Paldi", "coordinates": [23.0515, 72.5405]}
+                    ]
+                },
+                {
+                    "bus_number": "69",
+                    "stops": [
+                        {"name": "Motera", "coordinates": [23.0917, 72.5972]},
+                        {"name": "Chandkheda", "coordinates": [23.0890, 72.5880]},
+                        {"name": "Sabarmati", "coordinates": [23.0830, 72.5810]},
+                        {"name": "Vadaj", "coordinates": [23.0785, 72.5775]},
+                        {"name": "Usmanpura", "coordinates": [23.0730, 72.5725]},
+                        {"name": "Income Tax Office", "coordinates": [23.0710, 72.5710]},
+                        {"name": "Ashram Road", "coordinates": [23.0650, 72.5660]}
+                    ]
+                },
+                {
+                    "bus_number": "75",
+                    "stops": [
+                        {"name": "Nikol", "coordinates": [23.0125, 72.6585]},
+                        {"name": "Naroda", "coordinates": [23.06424, 72.64280]},
+                        {"name": "Kubernagar", "coordinates": [23.0525, 72.6485]},
+                        {"name": "Saijpur", "coordinates": [23.0685, 72.6145]},
+                        {"name": "Hathijan", "coordinates": [23.0725, 72.6185]},
+                        {"name": "Tragad", "coordinates": [23.0885, 72.6045]}
+                    ]
+                },
+                {
+                    "bus_number": "83",
+                    "stops": [
+                        {"name": "Laldarwaja Terminal", "coordinates": [23.02458, 72.57865]},
+                        {"name": "Kalupur", "coordinates": [23.03017, 72.60041]},
+                        {"name": "Saraspur", "coordinates": [23.0485, 72.6085]},
+                        {"name": "Asarwa", "coordinates": [23.0385, 72.5985]},
+                        {"name": "Sabarmati D Cabin", "coordinates": [23.0830, 72.5810]}
+                    ]
+                },
+                {
+                    "bus_number": "87",
+                    "stops": [
+                        {"name": "Chandkheda (Sarathi Bungalow)", "coordinates": [23.0930, 72.5910]},
+                        {"name": "Siddhi Complex", "coordinates": [23.0910, 72.5895]},
+                        {"name": "Chandkheda Gam", "coordinates": [23.0890, 72.5880]},
+                        {"name": "Railway Over Bridge", "coordinates": [23.0870, 72.5860]},
+                        {"name": "Sabarmati", "coordinates": [23.0830, 72.5810]},
+                        {"name": "Kalupur Terminal", "coordinates": [23.03017, 72.60041]}
+                    ]
+                },
+                {
+                    "bus_number": "101",
+                    "stops": [
+                        {"name": "Maninagar", "coordinates": [22.9963, 72.6032]},
+                        {"name": "Kankaria", "coordinates": [23.0103, 72.6002]},
+                        {"name": "Shahpur", "coordinates": [23.0215, 72.5945]},
+                        {"name": "Relief Road", "coordinates": [23.0320, 72.5890]},
+                        {"name": "Lal Darwaja", "coordinates": [23.02458, 72.57865]},
+                        {"name": "Kalupur", "coordinates": [23.03017, 72.60041]},
+                        {"name": "Sarangpur", "coordinates": [23.02396, 72.59961]}
+                    ]
+                },
+                {
+                    "bus_number": "102",
+                    "stops": [
+                        {"name": "Ghatlodia", "coordinates": [23.0585, 72.5385]},
+                        {"name": "Sola", "coordinates": [23.0685, 72.5145]},
+                        {"name": "Science City", "coordinates": [23.0625, 72.5025]},
+                        {"name": "Thaltej", "coordinates": [23.0505, 72.5095]},
+                        {"name": "Bodakdev", "coordinates": [23.0385, 72.5195]},
+                        {"name": "Vastrapur", "coordinates": [23.0378, 72.5285]}
+                    ]
+                },
+                {
+                    "bus_number": "103",
+                    "stops": [
+                        {"name": "Jamalpur", "coordinates": [23.01063, 72.57777]},
+                        {"name": "Raikhad", "coordinates": [23.0045, 72.5685]},
+                        {"name": "Asarwa", "coordinates": [23.0385, 72.5985]},
+                        {"name": "Saraspur", "coordinates": [23.0485, 72.6085]},
+                        {"name": "Gomtipur", "coordinates": [23.0425, 72.6285]},
+                        {"name": "Bapunagar", "coordinates": [23.03388, 72.63406]}
+                    ]
+                },
+                {
+                    "bus_number": "104",
+                    "stops": [
+                        {"name": "Chandola", "coordinates": [22.98203, 72.58568]},
+                        {"name": "Danilimda", "coordinates": [22.99608, 72.57912]},
+                        {"name": "Rakhial", "coordinates": [23.0185, 72.6285]},
+                        {"name": "Odhav", "coordinates": [22.9885, 72.6485]},
+                        {"name": "Vastral", "coordinates": [22.9625, 72.6125]},
+                        {"name": "Nikol", "coordinates": [23.0125, 72.6585]}
+                    ]
+                },
+                {
+                    "bus_number": "105",
+                    "stops": [
+                        {"name": "Ambawadi", "coordinates": [23.0285, 72.5485]},
+                        {"name": "Parimal Garden", "coordinates": [23.0325, 72.5525]},
+                        {"name": "Law Garden", "coordinates": [23.0345, 72.5565]},
+                        {"name": "Mithakhali", "coordinates": [23.0425, 72.5525]},
+                        {"name": "Navrangpura", "coordinates": [23.0375, 72.5610]},
+                        {"name": "Gujarat University", "coordinates": [23.0365, 72.5535]}
+                    ]
+                },
+                {
+                    "bus_number": "160",
+                    "stops": [
+                        {"name": "Gujarat High Court", "coordinates": [23.0225, 72.5725]},
+                        {"name": "Sola Road", "coordinates": [23.0485, 72.5485]},
+                        {"name": "Thaltej", "coordinates": [23.0505, 72.5095]},
+                        {"name": "Bopal", "coordinates": [23.0325, 72.4785]},
+                        {"name": "Ghuma", "coordinates": [23.0185, 72.4625]},
+                        {"name": "Sarkhej", "coordinates": [22.98752, 72.50353]},
+                        {"name": "Hatkeshwar Depot", "coordinates": [22.9625, 72.5285]}
+                    ]
                 }
             ]
 

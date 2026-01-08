@@ -146,3 +146,39 @@ AUTHENTICATION_BACKENDS = [
     'my_amts.auth.SeparateAdminAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+# Email Configuration for Emergency Notifications
+# For REAL EMAIL DELIVERY to vaibhavmevada796@gmail.com
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'noreply.amts.emergency@gmail.com'  # You'll need to create this or use your own
+EMAIL_HOST_PASSWORD = 'your-app-password'  # You'll need to set this
+DEFAULT_FROM_EMAIL = 'AMTS Emergency <noreply.amts.emergency@gmail.com>'
+
+# Alternative: Use a simple SMTP server for testing
+# Uncomment these lines and comment the Gmail config above for simple testing:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 1025
+# EMAIL_USE_TLS = False
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+
+# For immediate testing without SMTP setup, we'll use file backend
+# This will save emails as files that you can read
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
+# Emergency Contact Settings
+EMERGENCY_HELPLINES = [
+    'vaibhavmevada796@gmail.com',  # Primary Emergency Contact
+    'emergency@amts.gov.in',
+    'control.room@amts.gov.in',
+    'safety@amts.gov.in',
+    'admin@amts.gov.in'
+]
+
+# SMS Configuration (for future implementation)
+SMS_BACKEND = 'console'  # For localhost testing

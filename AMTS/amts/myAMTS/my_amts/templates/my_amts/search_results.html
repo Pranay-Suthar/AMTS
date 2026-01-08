@@ -907,6 +907,60 @@
                 transform: translateY(-5px);
             }
         }
+
+        /* Emergency Accident Button Styling */
+        .btn-danger {
+            background: linear-gradient(45deg, #f44336, #d32f2f) !important;
+            border: none !important;
+            color: white !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3) !important;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(45deg, #d32f2f, #b71c1c) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.5) !important;
+            animation: pulse-red 0.5s ease !important;
+        }
+
+        .btn-danger:active {
+            transform: translateY(0) !important;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { 
+                box-shadow: 0 4px 12px rgba(244, 67, 54, 0.5); 
+            }
+            50% { 
+                box-shadow: 0 6px 20px rgba(244, 67, 54, 0.8); 
+                transform: translateY(-3px) scale(1.02);
+            }
+        }
+
+        /* Make button groups responsive */
+        .btn-group.flex-wrap {
+            flex-wrap: wrap !important;
+            gap: 5px;
+        }
+
+        .btn-group.flex-wrap .btn {
+            margin-bottom: 5px;
+        }
+
+        /* Emergency notification styling */
+        .custom-notification.emergency {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            border-left: 5px solid #b71c1c;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
     </style>
 </head>
 
@@ -1591,7 +1645,7 @@
 
                     resultsHtml += `
                         </div>
-                        <div class="mt-3 d-flex gap-2">
+                        <div class="mt-3 d-flex gap-2 flex-wrap">
                             <a href="#map" class="btn btn-primary" onclick="showRouteOnMap(${index}, '${routeData}')">
                                 Show Route on Map
                             </a>
@@ -1600,6 +1654,9 @@
                             </button>
                             <button class="btn btn-warning" onclick="bookTicket('${route.route_parts[0].bus_number}', '${from}', '${to}')">
                                 Book Ticket
+                            </button>
+                            <button class="btn btn-danger" onclick="simulateAccidentFromSearch('${route.route_parts[0].bus_number}')">
+                                🚨 Simulate Accident
                             </button>
                         </div>
                     </div>
@@ -1631,12 +1688,15 @@
                     <div class="route-part mb-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <strong>Bus ${part.bus_number}</strong>
-                            <div class="btn-group">
+                            <div class="btn-group flex-wrap">
                                 <button class="btn btn-sm btn-success" onclick="showBusOptions('${part.bus_number}', '${fromStop}', '${toStop}')">
                                     Live Track Bus ${part.bus_number}
                                 </button>
                                 <button class="btn btn-sm btn-warning" onclick="bookTicket('${part.bus_number}', '${fromStop}', '${toStop}')">
                                     Book Ticket for Bus ${part.bus_number}
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="simulateAccidentFromSearch('${part.bus_number}')">
+                                    🚨 Accident
                                 </button>
                             </div>
                         </div>
@@ -2754,6 +2814,24 @@
                 payload.is_manual_stop = false;
                 payload.is_accident = true;
                 payload.speed = 0;
+                
+                // Show confirmation dialog for accident simulation
+                const confirmAccident = confirm(
+                    "🚨 EMERGENCY ACCIDENT SIMULATION 🚨\n\n" +
+                    "This will:\n" +
+                    "• Change bus status to 'ACCIDENT DETECTED'\n" +
+                    "• Freeze bus at current GPS location\n" +
+                    "• Send emergency emails to:\n" +
+                    "  - All passengers with bookings\n" +
+                    "  - 40 random family members\n" +
+                    "  - Emergency helplines (including vaibhavmevada796@gmail.com)\n\n" +
+                    "Continue with accident simulation?"
+                );
+                
+                if (!confirmAccident) {
+                    return; // User cancelled
+                }
+                
             } else if (action === 'resume') {
                 payload.is_manual_stop = false;
                 payload.is_accident = false;
@@ -2767,9 +2845,14 @@
                     headers: { 'Content-Type': 'application/json' }
                 });
                 const data = await res.json();
+                
                 if (data.status === 'success') {
-                    // UI will update on next poll
                     console.log("Status updated");
+                    
+                    // If accident was triggered, also send emergency notifications
+                    if (action === 'accident') {
+                        await triggerEmergencyNotifications(busId);
+                    }
                 } else {
                     alert("Failed to update status");
                 }
@@ -2777,6 +2860,117 @@
                 console.error(e);
                 alert("Error sending command");
             }
+        }
+
+        // New function to trigger emergency notifications
+        async function triggerEmergencyNotifications(busId) {
+            try {
+                // Show loading notification
+                showCustomNotification(
+                    "🚨 Emergency System Activating...",
+                    "Sending emergency notifications to all contacts",
+                    "🚨"
+                );
+
+                // Extract bus number from busId (e.g., "45-F1" -> "45")
+                const busNumber = busId.split('-')[0];
+                
+                // Get current location from the map or use default coordinates
+                let latitude = 23.0225; // Default Ahmedabad coordinates
+                let longitude = 72.5714;
+                
+                // Try to get actual bus location if available
+                if (window.currentBusMarker && window.currentBusMarker.getLatLng) {
+                    const currentPos = window.currentBusMarker.getLatLng();
+                    latitude = currentPos.lat;
+                    longitude = currentPos.lng;
+                }
+
+                // Prepare emergency data
+                const emergencyData = {
+                    bus_number: busNumber,
+                    accident_location: `Live GPS Location - Bus ${busNumber} Route`,
+                    latitude: latitude,
+                    longitude: longitude
+                };
+
+                console.log('🚨 Triggering Emergency System:', emergencyData);
+
+                // Call emergency notification API
+                const response = await fetch('/api/emergency-accident/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(emergencyData)
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    const emergencyResponse = result.emergency_response;
+                    
+                    // Show success notification with details
+                    showCustomNotification(
+                        "✅ Emergency System Activated!",
+                        `${emergencyResponse.notifications_sent} emergency emails sent successfully`,
+                        "✅"
+                    );
+
+                    // Show detailed alert
+                    alert(
+                        `🚨 EMERGENCY SYSTEM ACTIVATED SUCCESSFULLY! 🚨\n\n` +
+                        `📧 Total Emails Sent: ${emergencyResponse.notifications_sent}\n` +
+                        `👥 Affected Passengers: ${emergencyResponse.affected_passengers}\n` +
+                        `👨‍👩‍👧‍👦 Family Alerts: ${emergencyResponse.family_alerts_sent}\n` +
+                        `🚨 Helpline Alerts: ${emergencyResponse.helpline_alerts_sent}\n` +
+                        `📍 Location: ${emergencyResponse.gps_coordinates}\n` +
+                        `🗺️ Google Maps: ${emergencyResponse.google_maps_link}\n\n` +
+                        `Bus Status: ${emergencyResponse.bus_status}\n` +
+                        `Location Frozen: ${emergencyResponse.location_frozen ? 'YES' : 'NO'}\n\n` +
+                        `Check the Django console for email outputs!`
+                    );
+
+                    console.log('✅ Emergency Response:', result);
+                    
+                } else {
+                    throw new Error(result.message || 'Emergency system failed');
+                }
+
+            } catch (error) {
+                console.error('❌ Emergency system error:', error);
+                
+                showCustomNotification(
+                    "❌ Emergency System Error",
+                    `Failed to send notifications: ${error.message}`,
+                    "❌"
+                );
+                
+                alert(
+                    `❌ EMERGENCY SYSTEM ERROR ❌\n\n` +
+                    `Failed to send emergency notifications.\n` +
+                    `Error: ${error.message}\n\n` +
+                    `Please contact AMTS control room immediately:\n` +
+                    `📞 +91-79-2658-0000`
+                );
+            }
+        }
+
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
 
         // Add this after map initialization
@@ -3008,6 +3202,126 @@
                 }
             }
         });
+
+        // Function to simulate accident directly from search results
+        async function simulateAccidentFromSearch(busNumber) {
+            try {
+                // Show confirmation dialog
+                const confirmAccident = confirm(
+                    `🚨 EMERGENCY ACCIDENT SIMULATION 🚨\n\n` +
+                    `Bus: ${busNumber}\n\n` +
+                    `This will immediately:\n` +
+                    `• Change bus status to 'ACCIDENT DETECTED'\n` +
+                    `• Freeze bus at current GPS location\n` +
+                    `• Send emergency emails to:\n` +
+                    `  - All passengers with bookings on Bus ${busNumber}\n` +
+                    `  - 40 random family members\n` +
+                    `  - Emergency helplines (including vaibhavmevada796@gmail.com)\n\n` +
+                    `⚠️ This will trigger real emergency notifications!\n\n` +
+                    `Continue with accident simulation?`
+                );
+                
+                if (!confirmAccident) {
+                    return; // User cancelled
+                }
+
+                // Show loading notification
+                showCustomNotification(
+                    "🚨 Emergency System Activating...",
+                    `Triggering accident simulation for Bus ${busNumber}`,
+                    "🚨"
+                );
+
+                // Use default Ahmedabad coordinates for simulation
+                const emergencyData = {
+                    bus_number: busNumber,
+                    accident_location: `Emergency Simulation - Bus ${busNumber} Route`,
+                    latitude: 23.0225,
+                    longitude: 72.5714
+                };
+
+                console.log('🚨 Triggering Emergency System from Search:', emergencyData);
+
+                // Call emergency notification API
+                const response = await fetch('/api/emergency-accident/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(emergencyData)
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    const emergencyResponse = result.emergency_response;
+                    
+                    // Show success notification
+                    showCustomNotification(
+                        "✅ Emergency System Activated!",
+                        `${emergencyResponse.notifications_sent} emergency emails sent successfully`,
+                        "✅"
+                    );
+
+                    // Show detailed success alert
+                    alert(
+                        `🚨 EMERGENCY SYSTEM ACTIVATED SUCCESSFULLY! 🚨\n\n` +
+                        `Bus ${busNumber} Emergency Response:\n\n` +
+                        `📧 Total Emails Sent: ${emergencyResponse.notifications_sent}\n` +
+                        `👥 Affected Passengers: ${emergencyResponse.affected_passengers}\n` +
+                        `👨‍👩‍👧‍👦 Family Alerts: ${emergencyResponse.family_alerts_sent}\n` +
+                        `🚨 Helpline Alerts: ${emergencyResponse.helpline_alerts_sent}\n` +
+                        `📍 GPS Location: ${emergencyResponse.gps_coordinates}\n` +
+                        `🗺️ Google Maps: ${emergencyResponse.google_maps_link}\n\n` +
+                        `Bus Status: ${emergencyResponse.bus_status}\n` +
+                        `Location Frozen: ${emergencyResponse.location_frozen ? 'YES' : 'NO'}\n\n` +
+                        `✅ All emergency contacts have been notified!\n` +
+                        `📧 Check Django console for email outputs!`
+                    );
+
+                    console.log('✅ Emergency Response:', result);
+                    
+                } else {
+                    throw new Error(result.message || 'Emergency system failed');
+                }
+
+            } catch (error) {
+                console.error('❌ Emergency system error:', error);
+                
+                showCustomNotification(
+                    "❌ Emergency System Error",
+                    `Failed to send notifications: ${error.message}`,
+                    "❌"
+                );
+                
+                alert(
+                    `❌ EMERGENCY SYSTEM ERROR ❌\n\n` +
+                    `Bus: ${busNumber}\n` +
+                    `Failed to send emergency notifications.\n` +
+                    `Error: ${error.message}\n\n` +
+                    `Please contact AMTS control room immediately:\n` +
+                    `📞 Emergency: 108\n` +
+                    `📞 AMTS Control: +91-79-2658-0000`
+                );
+            }
+        }
+
+        // Helper function to get CSRF token (if not already defined)
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
     </script>
 </body>
 
