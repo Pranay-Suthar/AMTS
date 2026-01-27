@@ -581,57 +581,77 @@ def get_available_buses(request):
 
 @csrf_exempt
 def notify_accident_passengers(request):
-    """Notify all passengers who have booked tickets for a bus involved in an accident"""
+    """Enhanced Emergency Accident Notification System"""
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
             bus_number = data.get('bus_number')
-            accident_location = data.get('accident_location')
+            accident_location = data.get('accident_location', '')
             latitude = data.get('latitude')
             longitude = data.get('longitude')
             
-            # Get all bookings for this bus from today
-            from datetime import date
-            today = date.today()
-            affected_bookings = Booking.objects.filter(
+            # Validate required data
+            if not bus_number or not latitude or not longitude:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'Bus number and GPS coordinates are required'
+                }, status=400)
+            
+            # Update bus status to accident
+            try:
+                active_bus = ActiveBus.objects.get(
+                    bus__bus_number=bus_number,
+                    is_active=True
+                )
+                active_bus.is_accident = True
+                active_bus.status = 'OUT_OF_SERVICE'
+                active_bus.speed = 0
+                active_bus.latitude = float(latitude)
+                active_bus.longitude = float(longitude)
+                active_bus.save()
+                
+                print(f"Bus {bus_number} status updated to ACCIDENT at {latitude}, {longitude}")
+                
+            except ActiveBus.DoesNotExist:
+                print(f"Warning: Active bus {bus_number} not found in database")
+            
+            # Import and use emergency notification system
+            from .emergency_notifications import EmergencyNotificationSystem
+            
+            emergency_system = EmergencyNotificationSystem()
+            notification_result = emergency_system.send_emergency_emails(
                 bus_number=bus_number,
-                booking_date__date=today
-            ).select_related('user')
+                latitude=latitude,
+                longitude=longitude,
+                accident_location=accident_location
+            )
             
-            # Collect passenger information
-            passengers = []
-            for booking in affected_bookings:
-                passenger_info = {
-                    'user_id': booking.user.id,
-                    'username': booking.user.username,
-                    'email': booking.user.email,
-                    'booking_id': str(booking.booking_id),
-                    'from_stop': booking.from_stop,
-                    'to_stop': booking.to_stop,
-                    'notified': True
-                }
-                passengers.append(passenger_info)
-            
-            # In a real application, you would send actual emails/SMS here
-            # For now, we'll just return the list of passengers to notify
-            
-            return JsonResponse({
-                'status': 'success',
-                'total_passengers': len(passengers),
-                'passengers': passengers,
-                'accident_details': {
-                    'bus_number': bus_number,
-                    'location': accident_location,
-                    'latitude': latitude,
-                    'longitude': longitude,
-                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                }
-            })
+            if notification_result['status'] == 'success':
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'Emergency notifications sent successfully',
+                    'bus_status': 'ACCIDENT_DETECTED',
+                    'location_frozen': True,
+                    'notifications': {
+                        'total_emails_sent': notification_result['emails_sent'],
+                        'affected_passengers': notification_result['affected_passengers'],
+                        'family_alerts': notification_result['family_alerts'],
+                        'helpline_alerts': notification_result['helpline_alerts'],
+                        'failed_emails': notification_result['failed_emails']
+                    },
+                    'accident_details': notification_result['accident_details']
+                })
+            else:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': f"Emergency notification failed: {notification_result.get('message', 'Unknown error')}"
+                }, status=500)
             
         except Exception as e:
+            print(f"Error in emergency notification: {str(e)}")
             return JsonResponse({
                 'status': 'error',
-                'message': str(e)
+                'message': f'Emergency notification system error: {str(e)}'
             }, status=500)
     
     return JsonResponse({
@@ -822,3 +842,109 @@ def my_passes(request):
     """View all user's bus passes"""
     passes = BusPass.objects.filter(user=request.user)
     return render(request, 'my_amts/my_passes.html', {'passes': passes})
+
+@csrf_exempt
+def emergency_accident_alert(request):
+    """
+    Emergency Accident Alert System - Main Endpoint
+    Triggered when Admin/Driver clicks "Bus Accident" button
+    """
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            bus_number = data.get('bus_number')
+            latitude = data.get('latitude')
+            longitude = data.get('longitude')
+            accident_location = data.get('accident_location', '')
+            
+            # Validate required data
+            if not all([bus_number, latitude, longitude]):
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'Bus number, latitude, and longitude are required'
+                }, status=400)
+            
+            print(f"🚨 EMERGENCY ACCIDENT ALERT TRIGGERED 🚨")
+            print(f"Bus: {bus_number}, Location: {latitude}, {longitude}")
+            
+            # Step 1: Update bus status to "Accident Detected"
+            try:
+                # Find active bus instances for this bus number
+                active_buses = ActiveBus.objects.filter(
+                    bus__bus_number=bus_number,
+                    is_active=True
+                )
+                
+                buses_updated = 0
+                for active_bus in active_buses:
+                    active_bus.is_accident = True
+                    active_bus.status = 'OUT_OF_SERVICE'
+                    active_bus.speed = 0  # Freeze the bus
+                    active_bus.latitude = float(latitude)
+                    active_bus.longitude = float(longitude)
+                    active_bus.save()
+                    buses_updated += 1
+                
+                print(f"✅ {buses_updated} bus instances updated to ACCIDENT status")
+                
+            except Exception as e:
+                print(f"⚠️ Error updating bus status: {str(e)}")
+            
+            # Step 2: Trigger Emergency Notification System
+            from .emergency_notifications import EmergencyNotificationSystem
+            
+            emergency_system = EmergencyNotificationSystem()
+            notification_result = emergency_system.send_emergency_emails(
+                bus_number=bus_number,
+                latitude=latitude,
+                longitude=longitude,
+                accident_location=accident_location
+            )
+            
+            if notification_result['status'] == 'success':
+                print(f"✅ Emergency notifications sent successfully")
+                print(f"📧 Total emails sent: {notification_result['emails_sent']}")
+                print(f"👥 Affected passengers: {notification_result['affected_passengers']}")
+                print(f"👨‍👩‍👧‍👦 Family alerts: {notification_result['family_alerts']}")
+                print(f"🚨 Helpline alerts: {notification_result['helpline_alerts']}")
+                
+                return JsonResponse({
+                    'status': 'success',
+                    'message': '🚨 EMERGENCY SYSTEM ACTIVATED',
+                    'emergency_response': {
+                        'bus_status': 'ACCIDENT_DETECTED',
+                        'location_frozen': True,
+                        'gps_coordinates': f"{latitude}, {longitude}",
+                        'google_maps_link': f"https://www.google.com/maps?q={latitude},{longitude}",
+                        'notifications_sent': notification_result['emails_sent'],
+                        'affected_passengers': notification_result['affected_passengers'],
+                        'family_alerts_sent': notification_result['family_alerts'],
+                        'helpline_alerts_sent': notification_result['helpline_alerts'],
+                        'failed_notifications': len(notification_result['failed_emails']),
+                        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    },
+                    'accident_details': notification_result['accident_details']
+                })
+            else:
+                print(f"❌ Emergency notification failed: {notification_result.get('message')}")
+                return JsonResponse({
+                    'status': 'partial_success',
+                    'message': 'Bus status updated but notification system failed',
+                    'error': notification_result.get('message', 'Unknown notification error')
+                }, status=500)
+            
+        except Exception as e:
+            print(f"❌ Critical error in emergency system: {str(e)}")
+            return JsonResponse({
+                'status': 'error',
+                'message': f'Emergency system failure: {str(e)}'
+            }, status=500)
+    
+    return JsonResponse({
+        'status': 'error',
+        'message': 'Invalid request method. Use POST.'
+    }, status=400)
+
+def emergency_dashboard(request):
+    """Emergency Dashboard for Admin/Driver to trigger accident alerts"""
+    return render(request, 'my_amts/emergency_dashboard.html')
