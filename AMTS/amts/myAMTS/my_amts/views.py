@@ -905,7 +905,7 @@ def emergency_accident_alert(request):
                 print(f"✅ Emergency notifications sent successfully")
                 print(f"📧 Total emails sent: {notification_result['emails_sent']}")
                 print(f"👥 Affected passengers: {notification_result['affected_passengers']}")
-                print(f"👨‍👩‍👧‍👦 Family alerts: {notification_result['family_alerts']}")
+                print(f"📢 Broadcast alerts: {notification_result.get('broadcast_alerts', notification_result.get('family_alerts', 0))}")
                 print(f"🚨 Helpline alerts: {notification_result['helpline_alerts']}")
                 
                 return JsonResponse({
@@ -918,7 +918,7 @@ def emergency_accident_alert(request):
                         'google_maps_link': f"https://www.google.com/maps?q={latitude},{longitude}",
                         'notifications_sent': notification_result['emails_sent'],
                         'affected_passengers': notification_result['affected_passengers'],
-                        'family_alerts_sent': notification_result['family_alerts'],
+                        'broadcast_alerts_sent': notification_result.get('broadcast_alerts', notification_result.get('family_alerts', 0)),
                         'helpline_alerts_sent': notification_result['helpline_alerts'],
                         'failed_notifications': len(notification_result['failed_emails']),
                         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -947,4 +947,18 @@ def emergency_accident_alert(request):
 
 def emergency_dashboard(request):
     """Emergency Dashboard for Admin/Driver to trigger accident alerts"""
-    return render(request, 'my_amts/emergency_dashboard.html')
+    
+    # Get active emergency buses (buses currently in accident state)
+    from .models import ActiveBus
+    
+    active_emergencies = ActiveBus.objects.filter(
+        is_accident=True,
+        is_active=True
+    ).select_related('bus')
+    
+    context = {
+        'active_emergencies': active_emergencies,
+        'emergency_count': active_emergencies.count()
+    }
+    
+    return render(request, 'my_amts/emergency_dashboard.html', context)

@@ -177,9 +177,54 @@
             <div class="emergency-icon">🚨</div>
             <h1>EMERGENCY ACCIDENT ALERT SYSTEM</h1>
             <p class="lead">AMTS Emergency Response Dashboard</p>
+            {% if emergency_count > 0 %}
+            <div class="alert alert-danger mt-3">
+                <h5>⚠️ ACTIVE EMERGENCIES: {{ emergency_count }}</h5>
+                <p class="mb-0">{{ emergency_count }} bus{{ emergency_count|pluralize:"es" }} currently in emergency state</p>
+            </div>
+            {% endif %}
         </div>
         
         <div class="row justify-content-center">
+            {% if active_emergencies %}
+            <div class="col-md-10 mb-4">
+                <div class="emergency-card">
+                    <h3 class="text-center mb-4 text-danger">🚨 ACTIVE EMERGENCIES</h3>
+                    
+                    {% for emergency in active_emergencies %}
+                    <div class="alert alert-danger mb-3">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 class="mb-2">🚌 Bus {{ emergency.bus.bus_number }} - ACCIDENT DETECTED</h6>
+                                <p class="mb-1"><strong>📍 Location:</strong> {{ emergency.current_location }}</p>
+                                <p class="mb-1"><strong>⏰ Status:</strong> {{ emergency.status }}</p>
+                                <p class="mb-1"><strong>🕒 Last Updated:</strong> {{ emergency.last_updated|date:"M d, Y H:i" }}</p>
+                                {% if emergency.latitude and emergency.longitude %}
+                                <p class="mb-0">
+                                    <strong>🗺️ GPS:</strong> 
+                                    <a href="https://www.google.com/maps?q={{ emergency.latitude }},{{ emergency.longitude }}" target="_blank" class="text-white">
+                                        {{ emergency.latitude }}, {{ emergency.longitude }} (View on Maps)
+                                    </a>
+                                </p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <span class="badge bg-danger fs-6">EMERGENCY ACTIVE</span>
+                                <br><small class="text-muted">Speed: {{ emergency.speed }} km/h</small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="text-center mt-3">
+                        <button class="btn btn-warning" onclick="window.location.reload()">
+                            🔄 Refresh Emergency Status
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
             <div class="col-md-8">
                 <div class="emergency-card">
                     <h3 class="text-center mb-4">🚌 Bus Accident Emergency Protocol</h3>
@@ -188,7 +233,7 @@
                         <h6>📋 Emergency System Features:</h6>
                         <ul class="mb-0">
                             <li>✅ Instantly freeze bus at GPS location</li>
-                            <li>✅ Send emergency emails to 40 random family members</li>
+                            <li>✅ Send emergency broadcast to ALL registered users</li>
                             <li>✅ Notify all passengers with bookings on the bus</li>
                             <li>✅ Alert emergency helplines and control room</li>
                             <li>✅ Generate Google Maps location link</li>
@@ -225,7 +270,7 @@
                         
                         <div class="text-center mt-3">
                             <small class="text-muted">
-                                ⚠️ This will immediately send emergency notifications to passengers and families
+                                ⚠️ This will immediately send emergency notifications to ALL registered users
                             </small>
                         </div>
                     </form>
@@ -250,8 +295,8 @@
                     <div class="info-card">
                         <h6>📧 Email Configuration (Localhost):</h6>
                         <p class="mb-1"><strong>Backend:</strong> Console (emails logged to terminal)</p>
-                        <p class="mb-1"><strong>Emergency Helplines:</strong> 4 configured addresses</p>
-                        <p class="mb-0"><strong>Random Users:</strong> Up to 40 family notifications</p>
+                        <p class="mb-1"><strong>Emergency Helplines:</strong> 6 configured addresses</p>
+                        <p class="mb-0"><strong>Broadcast Users:</strong> ALL registered users with email</p>
                     </div>
                 </div>
             </div>
@@ -334,8 +379,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             <strong>${response.affected_passengers}</strong>
                         </div>
                         <div class="notification-item">
-                            <span>👨‍👩‍👧‍👦 Family Alerts:</span>
-                            <strong>${response.family_alerts_sent}</strong>
+                            <span>📧 Broadcast Alerts:</span>
+                            <strong>${response.broadcast_alerts_sent || response.family_alerts_sent}</strong>
                         </div>
                         <div class="notification-item">
                             <span>🚨 Helpline Alerts:</span>
@@ -359,6 +404,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p><strong>Time:</strong> ${details.timestamp}</p>
                         <p><strong>Maps:</strong> <a href="${details.maps_link}" target="_blank">View on Google Maps</a></p>
                     </div>
+                    
+                    <div class="mt-4 text-center">
+                        <div class="alert alert-info">
+                            <h6>🚨 Refreshing Emergency Dashboard...</h6>
+                            <p class="mb-0">Page will refresh in <span id="countdown">5</span> seconds to show emergency status</p>
+                            <button id="redirectNow" class="btn btn-primary btn-sm mt-2">Refresh Now</button>
+                        </div>
+                    </div>
                 `;
                 
                 showStatus('success', successHtml);
@@ -367,6 +420,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 emergencyBtn.classList.remove('processing');
                 emergencyBtn.classList.add('pulse-animation');
                 emergencyBtn.innerHTML = '✅ EMERGENCY SYSTEM ACTIVATED';
+                
+                // Start countdown and redirect
+                startRedirectCountdown();
                 
             } else {
                 showStatus('error', `❌ Emergency system failed: ${data.message}`);
@@ -378,6 +434,43 @@ document.addEventListener('DOMContentLoaded', function() {
             showStatus('error', `❌ System error: ${error.message}`);
             resetButton();
         });
+    }
+    
+    function startRedirectCountdown() {
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+        const redirectButton = document.getElementById('redirectNow');
+        
+        // Update countdown every second
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            if (countdownElement) {
+                countdownElement.textContent = countdown;
+            }
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                redirectToEmergencyDashboard();
+            }
+        }, 1000);
+        
+        // Allow immediate redirect
+        if (redirectButton) {
+            redirectButton.addEventListener('click', () => {
+                clearInterval(countdownInterval);
+                redirectToEmergencyDashboard();
+            });
+        }
+    }
+    
+    function redirectToEmergencyDashboard() {
+        // Show redirect message
+        showStatus('processing', '🚨 Refreshing Emergency Dashboard...');
+        
+        // Refresh the current page to show updated emergency status
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
     
     function showStatus(type, message) {

@@ -20,41 +20,27 @@ class EmergencyNotificationSystem:
     
     def __init__(self):
         self.emergency_helplines = getattr(settings, 'EMERGENCY_HELPLINES', [
+            'vaibhavmevada796@gmail.com',  # Primary Emergency Contact
+            'cipaha2099@gxuzi.com',  # Test Email for Emergency Notifications
             'emergency@amts.gov.in',
             'control.room@amts.gov.in',
             'safety@amts.gov.in',
             'admin@amts.gov.in'
         ])
     
-    def get_random_users(self, count=40):
+    def get_priority_users_for_emergency(self, max_users=0):
         """
-        Select random users from database for emergency notification
-        Returns users with email addresses
+        Get priority users for emergency notification
+        For now, only send to emergency helplines from settings.py to avoid rate limiting
         """
         try:
-            # Get all users with email addresses
-            users_with_emails = User.objects.filter(
-                email__isnull=False,
-                email__gt='',
-                is_active=True
-            ).exclude(is_staff=True)  # Exclude staff members
-            
-            total_users = users_with_emails.count()
-            
-            if total_users == 0:
-                logger.warning("No users with email addresses found")
-                return []
-            
-            # If we have fewer users than requested, return all
-            if total_users <= count:
-                return list(users_with_emails)
-            
-            # Get random users
-            random_users = random.sample(list(users_with_emails), count)
-            return random_users
+            # For now, return empty list to only use emergency helplines from settings
+            # This avoids Gmail rate limiting and focuses on the important emails
+            logger.info("Using only emergency helplines from settings.py for notifications")
+            return []
             
         except Exception as e:
-            logger.error(f"Error selecting random users: {str(e)}")
+            logger.error(f"Error getting priority users for emergency: {str(e)}")
             return []
     
     def get_affected_passengers(self, bus_number):
@@ -121,8 +107,8 @@ class EmergencyNotificationSystem:
             # Get affected passengers (actual bookings)
             affected_passengers = self.get_affected_passengers(bus_number)
             
-            # Get random users for emergency notification (simulate family members)
-            random_users = self.get_random_users(40)
+            # For now, only use emergency helplines from settings.py to avoid rate limiting
+            priority_users = self.get_priority_users_for_emergency(max_users=0)
             
             # Prepare email data
             timestamp = datetime.now().strftime('%d/%m/%Y at %I:%M %p')
@@ -150,33 +136,7 @@ AMTS is coordinating with emergency services for immediate assistance.
 Stay safe,
 AMTS Emergency Response Team"""
 
-            # Email content for random users (family emergency)
-            family_subject = f"🚨 FAMILY EMERGENCY: Possible Bus Accident - Bus {bus_number}"
-            family_message = f"""EMERGENCY NOTIFICATION - AMTS
-
-🚨 FAMILY EMERGENCY ALERT 🚨
-
-An accident involving your family member has occurred.
-
-📍 Location: {location_str}
-🚌 Bus Number: {bus_number}
-🛣️ Route: {route_name}
-⏰ Time: {timestamp}
-
-Please contact emergency services or the AMTS control room immediately:
-- Emergency Services: 108
-- AMTS Control Room: +91-79-2658-0000
-- Police: 100
-- Fire: 101
-
-Location on Google Maps: {maps_link}
-
-AMTS Emergency Response Team is on-site providing assistance.
-
-Immediate Action Required,
-AMTS Emergency Response Team"""
-
-            # Email content for emergency helplines
+            # Email content for emergency helplines (PRIORITY EMAILS ONLY)
             helpline_subject = f"🚨 BUS ACCIDENT REPORT - Bus {bus_number} - Immediate Response Required"
             helpline_message = f"""EMERGENCY INCIDENT REPORT - AMTS
 
@@ -190,7 +150,7 @@ INCIDENT DETAILS:
 - Time: {timestamp}
 
 AFFECTED PASSENGERS: {len(affected_passengers)} confirmed bookings
-EMERGENCY NOTIFICATIONS SENT: {len(random_users)} family alerts
+EMERGENCY NOTIFICATION: Sent to priority contacts only
 
 IMMEDIATE ACTIONS REQUIRED:
 1. Dispatch emergency response team
@@ -210,7 +170,7 @@ AMTS Emergency Response System"""
             emails_sent = 0
             failed_emails = []
             
-            # 1. Send to affected passengers
+            # 1. Send to affected passengers (if any)
             for passenger_data in affected_passengers:
                 try:
                     send_mail(
@@ -226,23 +186,10 @@ AMTS Emergency Response System"""
                     failed_emails.append(passenger_data['user'].email)
                     logger.error(f"Failed to send email to passenger {passenger_data['user'].email}: {str(e)}")
             
-            # 2. Send to random users (family emergency)
-            for user in random_users:
-                try:
-                    send_mail(
-                        family_subject,
-                        family_message,
-                        settings.DEFAULT_FROM_EMAIL,
-                        [user.email],
-                        fail_silently=False,
-                    )
-                    emails_sent += 1
-                    logger.info(f"Family emergency email sent to: {user.email}")
-                except Exception as e:
-                    failed_emails.append(user.email)
-                    logger.error(f"Failed to send family emergency email to {user.email}: {str(e)}")
+            # 2. Skip user broadcast for now (only use emergency helplines)
+            logger.info("Skipping user broadcast - using only emergency helplines from settings.py")
             
-            # 3. Send to emergency helplines
+            # 3. Send to emergency helplines (PRIORITY EMAILS) (with small delays)
             for helpline_email in self.emergency_helplines:
                 try:
                     send_mail(
@@ -254,6 +201,7 @@ AMTS Emergency Response System"""
                     )
                     emails_sent += 1
                     logger.info(f"Emergency alert sent to helpline: {helpline_email}")
+                    time.sleep(0.5)  # Small delay between helpline emails
                 except Exception as e:
                     failed_emails.append(helpline_email)
                     logger.error(f"Failed to send email to helpline {helpline_email}: {str(e)}")
@@ -261,7 +209,7 @@ AMTS Emergency Response System"""
             # Log emergency notification
             self.log_emergency_notification(
                 bus_number, latitude, longitude, 
-                len(affected_passengers), len(random_users), 
+                len(affected_passengers), len(priority_users), 
                 emails_sent, failed_emails
             )
             
@@ -269,7 +217,7 @@ AMTS Emergency Response System"""
                 'status': 'success',
                 'emails_sent': emails_sent,
                 'affected_passengers': len(affected_passengers),
-                'family_alerts': len(random_users),
+                'broadcast_alerts': len(priority_users),
                 'helpline_alerts': len(self.emergency_helplines),
                 'failed_emails': failed_emails,
                 'accident_details': {
@@ -289,7 +237,7 @@ AMTS Emergency Response System"""
             }
     
     def log_emergency_notification(self, bus_number, latitude, longitude, 
-                                 affected_count, family_count, emails_sent, failed_emails):
+                                 affected_count, broadcast_count, emails_sent, failed_emails):
         """
         Log emergency notification details for audit trail
         """
@@ -301,7 +249,7 @@ Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 Bus Number: {bus_number}
 GPS Location: {latitude}, {longitude}
 Affected Passengers: {affected_count}
-Family Alerts Sent: {family_count}
+Emergency Broadcast Sent: {broadcast_count} users
 Total Emails Sent: {emails_sent}
 Failed Emails: {len(failed_emails)}
 Failed Recipients: {', '.join(failed_emails) if failed_emails else 'None'}

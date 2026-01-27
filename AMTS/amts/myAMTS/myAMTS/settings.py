@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,25 +157,26 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'vaibhavmevada796@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-16-digit-app-password'  # Replace with your Gmail App Password
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'vaibhavmevada796@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('GMAIL_APP_PASSWORD', 'your-app-password-here')  # Hidden in .env file
 DEFAULT_FROM_EMAIL = 'AMTS Emergency <vaibhavmevada796@gmail.com>'
 
 # Alternative backends for testing (currently disabled):
+# Console backend - prints emails to terminal:
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # File backend - saves emails as files:
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
-# Console backend - prints emails to console:
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 # Emergency Contact Settings
 EMERGENCY_HELPLINES = [
     'vaibhavmevada796@gmail.com',  # Primary Emergency Contact
+    'cipaha2099@gxuzi.com',  # Test Email for Emergency Notifications
     'emergency@amts.gov.in',
     'control.room@amts.gov.in',
     'safety@amts.gov.in',
-    'admin@amts.gov.in'
+    'admin@amts.gov.in',
 ]
 
 # SMS Configuration (for future implementation)

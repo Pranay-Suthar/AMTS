@@ -3215,9 +3215,9 @@
                     `• Freeze bus at current GPS location\n` +
                     `• Send emergency emails to:\n` +
                     `  - All passengers with bookings on Bus ${busNumber}\n` +
-                    `  - 40 random family members\n` +
-                    `  - Emergency helplines (including vaibhavmevada796@gmail.com)\n\n` +
-                    `⚠️ This will trigger real emergency notifications!\n\n` +
+                    `  - ALL registered users (emergency broadcast)\n` +
+                    `  - Emergency helplines (including vaibhavmevada796@gmail.com & cipaha2099@gxuzi.com)\n\n` +
+                    `⚠️ This will trigger REAL emergency notifications via Gmail SMTP!\n\n` +
                     `Continue with accident simulation?`
                 );
                 
@@ -3270,17 +3270,24 @@
                         `Bus ${busNumber} Emergency Response:\n\n` +
                         `📧 Total Emails Sent: ${emergencyResponse.notifications_sent}\n` +
                         `👥 Affected Passengers: ${emergencyResponse.affected_passengers}\n` +
-                        `👨‍👩‍👧‍👦 Family Alerts: ${emergencyResponse.family_alerts_sent}\n` +
+                        `📢 Broadcast Alerts: ${emergencyResponse.broadcast_alerts_sent || emergencyResponse.family_alerts_sent}\n` +
                         `🚨 Helpline Alerts: ${emergencyResponse.helpline_alerts_sent}\n` +
                         `📍 GPS Location: ${emergencyResponse.gps_coordinates}\n` +
                         `🗺️ Google Maps: ${emergencyResponse.google_maps_link}\n\n` +
                         `Bus Status: ${emergencyResponse.bus_status}\n` +
                         `Location Frozen: ${emergencyResponse.location_frozen ? 'YES' : 'NO'}\n\n` +
                         `✅ All emergency contacts have been notified!\n` +
-                        `📧 Check Django console for email outputs!`
+                        `📧 Check your Gmail: vaibhavmevada796@gmail.com\n` +
+                        `📧 Check test email: cipaha2099@gxuzi.com\n\n` +
+                        `🚨 Redirecting to Emergency Dashboard...`
                     );
 
                     console.log('✅ Emergency Response:', result);
+                    
+                    // Redirect to emergency dashboard after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/emergency-dashboard/';
+                    }, 2000);
                     
                 } else {
                     throw new Error(result.message || 'Emergency system failed');
