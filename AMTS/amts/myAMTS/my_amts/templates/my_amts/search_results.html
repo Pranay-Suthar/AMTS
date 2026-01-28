@@ -1655,9 +1655,6 @@
                             <button class="btn btn-warning" onclick="bookTicket('${route.route_parts[0].bus_number}', '${from}', '${to}')">
                                 Book Ticket
                             </button>
-                            <button class="btn btn-danger" onclick="simulateAccidentFromSearch('${route.route_parts[0].bus_number}')">
-                                🚨 Simulate Accident
-                            </button>
                         </div>
                     </div>
                 </div>`;
@@ -1694,9 +1691,6 @@
                                 </button>
                                 <button class="btn btn-sm btn-warning" onclick="bookTicket('${part.bus_number}', '${fromStop}', '${toStop}')">
                                     Book Ticket for Bus ${part.bus_number}
-                                </button>
-                                <button class="btn btn-sm btn-danger" onclick="simulateAccidentFromSearch('${part.bus_number}')">
-                                    🚨 Accident
                                 </button>
                             </div>
                         </div>
@@ -2923,16 +2917,24 @@
                         `🚨 EMERGENCY SYSTEM ACTIVATED SUCCESSFULLY! 🚨\n\n` +
                         `📧 Total Emails Sent: ${emergencyResponse.notifications_sent}\n` +
                         `👥 Affected Passengers: ${emergencyResponse.affected_passengers}\n` +
-                        `👨‍👩‍👧‍👦 Family Alerts: ${emergencyResponse.family_alerts_sent}\n` +
+                        `📢 Broadcast Alerts: ${emergencyResponse.broadcast_alerts_sent || emergencyResponse.family_alerts_sent}\n` +
                         `🚨 Helpline Alerts: ${emergencyResponse.helpline_alerts_sent}\n` +
                         `📍 Location: ${emergencyResponse.gps_coordinates}\n` +
                         `🗺️ Google Maps: ${emergencyResponse.google_maps_link}\n\n` +
                         `Bus Status: ${emergencyResponse.bus_status}\n` +
                         `Location Frozen: ${emergencyResponse.location_frozen ? 'YES' : 'NO'}\n\n` +
-                        `Check the Django console for email outputs!`
+                        `✅ All emergency contacts have been notified!\n` +
+                        `📧 Check your Gmail: vaibhavmevada796@gmail.com\n` +
+                        `📧 Check test email: cipaha2099@gxuzi.com\n\n` +
+                        `🚨 Redirecting to Emergency Dashboard...`
                     );
 
                     console.log('✅ Emergency Response:', result);
+                    
+                    // Redirect to emergency dashboard after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/emergency-dashboard/';
+                    }, 2000);
                     
                 } else {
                     throw new Error(result.message || 'Emergency system failed');
