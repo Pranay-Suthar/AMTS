@@ -690,6 +690,9 @@ def submit_bus_pass(request):
             dob_str = request.POST.get('date_of_birth')
             date_of_birth = dt.strptime(dob_str, '%Y-%m-%d').date()
             
+            # Get email from form
+            pass_email = request.POST.get('email')
+            
             # Create bus pass record
             bus_pass = BusPass.objects.create(
                 user=request.user,
@@ -698,7 +701,7 @@ def submit_bus_pass(request):
                 date_of_birth=date_of_birth,
                 gender=request.POST.get('gender'),
                 phone_number=request.POST.get('phone_number'),
-                email=request.POST.get('email'),
+                email=pass_email,
                 address=request.POST.get('address'),
                 from_stop=request.POST.get('from_stop'),
                 to_stop=request.POST.get('to_stop'),
@@ -715,11 +718,15 @@ def submit_bus_pass(request):
             bus_pass.pdf_file = pdf_path
             bus_pass.save()
             
+            # Send PDF via email
+            email_sent = send_bus_pass_email(bus_pass, pass_email, pdf_path)
+            
             return JsonResponse({
                 'status': 'success',
                 'pass_id': str(bus_pass.pass_id),
                 'pdf_url': f'/media/{pdf_path}',
-                'message': 'Bus pass application submitted successfully!'
+                'email_sent': email_sent,
+                'message': f'Bus pass application submitted successfully! {"PDF sent to " + pass_email if email_sent else "PDF generated successfully"}'
             })
             
         except Exception as e:
@@ -836,6 +843,80 @@ def generate_bus_pass_pdf(bus_pass):
     c.save()
     
     return f"pass_pdfs/{filename}"
+
+def send_bus_pass_email(bus_pass, email_address, pdf_path):
+    """Send bus pass PDF via email"""
+    try:
+        from django.core.mail import EmailMessage
+        from django.conf import settings
+        import os
+        
+        # Email subject and content
+        subject = f"🚌 Your AMTS {bus_pass.get_pass_type_display()} Pass - Ready for Use!"
+        
+        message = f"""
+Dear {bus_pass.full_name},
+
+🎉 Congratulations! Your AMTS {bus_pass.get_pass_type_display()} Pass has been successfully generated and is ready for use.
+
+📋 Pass Details:
+• Pass ID: {bus_pass.pass_id}
+• Type: {bus_pass.get_pass_type_display()}
+• Route: {bus_pass.from_stop} ↔ {bus_pass.to_stop}
+• Route Number: {bus_pass.route_number}
+• Valid From: {bus_pass.start_date.strftime('%d/%m/%Y')}
+• Valid Until: {bus_pass.end_date.strftime('%d/%m/%Y')}
+
+📱 How to Use Your Pass:
+1. Download and save the attached PDF to your phone
+2. Show the PDF pass to the bus conductor when boarding
+3. Keep a backup copy for your records
+4. The pass is valid for the specified route and dates
+
+🚌 Important Notes:
+• This pass is non-transferable and valid only for the registered user
+• Please carry a valid ID along with your pass
+• Report any issues to AMTS customer service: +91-79-2658-0000
+• Keep your pass safe - replacement charges may apply
+
+Thank you for choosing AMTS for your daily commute!
+
+Best regards,
+AMTS Pass Department
+Ahmedabad Municipal Transport Service
+
+---
+This is an automated email. Please do not reply to this message.
+For support, contact: support@amts.gov.in
+        """
+        
+        # Create email with attachment
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[email_address],
+        )
+        
+        # Attach PDF file
+        pdf_full_path = os.path.join(settings.MEDIA_ROOT, pdf_path)
+        if os.path.exists(pdf_full_path):
+            with open(pdf_full_path, 'rb') as pdf_file:
+                email.attach(
+                    f"AMTS_{bus_pass.get_pass_type_display()}_Pass_{bus_pass.pass_id}.pdf",
+                    pdf_file.read(),
+                    'application/pdf'
+                )
+        
+        # Send email
+        email.send(fail_silently=False)
+        
+        print(f"✅ Bus pass PDF sent successfully to: {email_address}")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Failed to send bus pass email to {email_address}: {str(e)}")
+        return False
 
 @login_required
 def my_passes(request):
