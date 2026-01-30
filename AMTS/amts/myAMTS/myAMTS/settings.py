@@ -185,4 +185,4 @@ EMERGENCY_HELPLINES = [
 ]
 
 # SMS Configuration (for future implementation)
-SMS_BACKEND = 'console'  # For localhost testing
+SMS_BACKEND = 'console'  # For localhost testing    
