@@ -176,7 +176,7 @@ DEFAULT_FROM_EMAIL = 'AMTS Emergency <vaibhavmevada796@gmail.com>'
 # Emergency Contact Settings
 EMERGENCY_HELPLINES = [
     'vaibhavmevada796@gmail.com',  # Primary Emergency Contact
-    'cipaha2099@gxuzi.com',  # Test Email for Emergency Notifications
+    # 'cipaha2099@gxuzi.com',  # Test Email for Emergency Notifications
     'paresh07suva@gmail.com',  # Paresh Emergency Contact
     'emergency@amts.gov.in',
     'control.room@amts.gov.in',

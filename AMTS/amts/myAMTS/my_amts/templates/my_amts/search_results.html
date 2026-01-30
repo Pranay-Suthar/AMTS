@@ -355,26 +355,69 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(33, 150, 243, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 18px 28px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             transform: translateX(120%);
-            transition: transform 0.3s ease-out;
-            max-width: 350px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 380px;
+            min-width: 320px;
         }
 
         .custom-notification.show {
             transform: translateX(0);
         }
 
+        /* Info notifications - Semi-transparent Blue */
+        .custom-notification.info {
+            background: rgba(33, 150, 243, 0.15);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            box-shadow: 0 8px 32px rgba(33, 150, 243, 0.2);
+        }
+
+        /* Success notifications - Semi-transparent Green */
+        .custom-notification.success {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            box-shadow: 0 8px 32px rgba(76, 175, 80, 0.25);
+        }
+
+        /* Error notifications - Semi-transparent Red */
+        .custom-notification.error {
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid rgba(244, 67, 54, 0.4);
+            box-shadow: 0 8px 32px rgba(244, 67, 54, 0.25);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Warning notifications - Semi-transparent Orange */
+        .custom-notification.warning {
+            background: rgba(255, 152, 0, 0.15);
+            border: 1px solid rgba(255, 152, 0, 0.4);
+            box-shadow: 0 8px 32px rgba(255, 152, 0, 0.25);
+        }
+
+        /* Emergency notifications - Semi-transparent Red with pulsing */
+        .custom-notification.emergency {
+            background: rgba(211, 47, 47, 0.2);
+            border: 1px solid rgba(211, 47, 47, 0.5);
+            box-shadow: 0 8px 32px rgba(211, 47, 47, 0.3);
+            animation: emergencyPulse 1.2s ease-in-out infinite alternate;
+        }
+
         .notification-icon {
-            font-size: 24px;
+            font-size: 28px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
         }
 
         .notification-content {
@@ -383,12 +426,16 @@
 
         .notification-title {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-size: 1.1rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .notification-message {
             font-size: 0.9rem;
-            opacity: 0.9;
+            opacity: 0.95;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            line-height: 1.4;
         }
 
         .notification-progress {
@@ -396,8 +443,59 @@
             bottom: 0;
             left: 0;
             height: 3px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.4);
             width: 100%;
+            border-radius: 0 0 12px 12px;
+            animation: progressBar 5s linear forwards;
+        }
+
+        /* Enhanced animations */
+        @keyframes progressBar {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        @keyframes emergencyPulse {
+            0% { 
+                box-shadow: 0 8px 32px rgba(211, 47, 47, 0.3);
+                transform: translateX(0) scale(1);
+                border-color: rgba(211, 47, 47, 0.5);
+            }
+            100% { 
+                box-shadow: 0 12px 40px rgba(211, 47, 47, 0.5);
+                transform: translateX(0) scale(1.02);
+                border-color: rgba(211, 47, 47, 0.7);
+            }
+        }
+
+        /* Hover effects for notifications */
+        .custom-notification:hover {
+            transform: translateX(-5px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .custom-notification.success:hover {
+            box-shadow: 0 12px 40px rgba(76, 175, 80, 0.4);
+        }
+
+        .custom-notification.error:hover,
+        .custom-notification.emergency:hover {
+            box-shadow: 0 12px 40px rgba(244, 67, 54, 0.4);
+        }
+
+        .custom-notification.warning:hover {
+            box-shadow: 0 12px 40px rgba(255, 152, 0, 0.4);
+        }
+
+        .custom-notification.info:hover {
+            box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
+        }
             transform-origin: left;
             animation: progress 5s linear;
         }
@@ -951,9 +1049,10 @@
 
         /* Emergency notification styling */
         .custom-notification.emergency {
-            background: linear-gradient(45deg, #f44336, #d32f2f);
-            border-left: 5px solid #b71c1c;
-            animation: shake 0.5s ease-in-out;
+            background: linear-gradient(45deg, #d32f2f, #b71c1c);
+            border-left: 5px solid #8b0000;
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+            animation: emergencyPulse 1s ease-in-out infinite alternate;
         }
 
         @keyframes shake {
@@ -2861,9 +2960,10 @@
             try {
                 // Show loading notification
                 showCustomNotification(
-                    "🚨 Emergency System Activating...",
-                    "Sending emergency notifications to all contacts",
-                    "🚨"
+                    "🚨 EMERGENCY SAFETY SYSTEM ACTIVATING",
+                    "Sending critical emergency notifications to all contacts",
+                    "🚨",
+                    "emergency"
                 );
 
                 // Extract bus number from busId (e.g., "45-F1" -> "45")
@@ -2907,9 +3007,10 @@
                     
                     // Show success notification with details
                     showCustomNotification(
-                        "✅ Emergency System Activated!",
-                        `${emergencyResponse.notifications_sent} emergency emails sent successfully`,
-                        "✅"
+                        "✅ EMERGENCY SAFETY SYSTEM ACTIVATED",
+                        `${emergencyResponse.notifications_sent} emergency emails sent successfully to all contacts`,
+                        "✅",
+                        "success"
                     );
 
                     // Show detailed alert
@@ -3027,9 +3128,10 @@
                 if (Math.abs(nearestIndex - destinationIndex) === 1 && !window.notificationShown) {
                     // Show custom notification
                     showCustomNotification(
-                        "Bus Approaching!",
+                        "🚌 Bus Approaching!",
                         `Your bus is one stop away from ${stops[destinationIndex].name}`,
-                        "🚌"
+                        "🚌",
+                        "warning"
                     );
 
                     // Also try browser notification as backup
@@ -3121,10 +3223,10 @@
         }
 
         // Add this function to handle custom notifications
-        function showCustomNotification(title, message, icon) {
+        function showCustomNotification(title, message, icon, type = 'info') {
             // Create notification element
             const notification = document.createElement('div');
-            notification.className = 'custom-notification';
+            notification.className = `custom-notification ${type}`;
             notification.innerHTML = `
         <div class="notification-icon">${icon}</div>
         <div class="notification-content">
@@ -3140,11 +3242,12 @@
             // Trigger animation
             setTimeout(() => notification.classList.add('show'), 100);
 
-            // Remove after animation
+            // Remove after animation (longer for emergency notifications)
+            const duration = type === 'emergency' ? 8000 : 5000;
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
-            }, 5000);
+            }, duration);
 
             // Add sound effect (optional)
             const audio = new Audio('/static/notification.mp3');  // Add your notification sound
@@ -3229,9 +3332,10 @@
 
                 // Show loading notification
                 showCustomNotification(
-                    "🚨 Emergency System Activating...",
+                    "🚨 EMERGENCY SYSTEM ACTIVATING",
                     `Triggering accident simulation for Bus ${busNumber}`,
-                    "🚨"
+                    "🚨",
+                    "emergency"
                 );
 
                 // Use default Ahmedabad coordinates for simulation
@@ -3261,9 +3365,10 @@
                     
                     // Show success notification
                     showCustomNotification(
-                        "✅ Emergency System Activated!",
+                        "✅ EMERGENCY SAFETY SYSTEM ACTIVATED",
                         `${emergencyResponse.notifications_sent} emergency emails sent successfully`,
-                        "✅"
+                        "✅",
+                        "success"
                     );
 
                     // Show detailed success alert
