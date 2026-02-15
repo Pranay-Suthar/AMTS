@@ -1030,16 +1030,73 @@ def emergency_dashboard(request):
     """Emergency Dashboard for Admin/Driver to trigger accident alerts"""
     
     # Get active emergency buses (buses currently in accident state)
-    from .models import ActiveBus
+    from .models import ActiveBus, Booking
+    from django.db.models import Count, Q
+    from datetime import datetime, timedelta
     
+    # Active emergencies
     active_emergencies = ActiveBus.objects.filter(
         is_accident=True,
         is_active=True
-    ).select_related('bus')
+    ).select_related('bus').order_by('-last_updated')
+    
+    # Recent accidents (last 24 hours) - from ActiveBus history
+    yesterday = datetime.now() - timedelta(days=1)
+    recent_accidents = ActiveBus.objects.filter(
+        is_accident=True,
+        last_updated__gte=yesterday
+    ).select_related('bus').order_by('-last_updated')
+    
+    # All accident history (buses that have been in accident state)
+    all_accidents = ActiveBus.objects.filter(
+        is_accident=True
+    ).select_related('bus').order_by('-last_updated')[:10]
+    
+    # Statistics
+    total_accidents_today = ActiveBus.objects.filter(
+        is_accident=True,
+        last_updated__date=datetime.now().date()
+    ).count()
+    
+    total_accidents_week = ActiveBus.objects.filter(
+        is_accident=True,
+        last_updated__gte=datetime.now() - timedelta(days=7)
+    ).count()
+    
+    total_accidents_all = ActiveBus.objects.filter(
+        is_accident=True
+    ).count()
+    
+    # Affected passengers count
+    affected_passengers_today = Booking.objects.filter(
+        booking_date__date=datetime.now().date()
+    ).filter(
+        bus_number__in=active_emergencies.values_list('bus__bus_number', flat=True)
+    ).count()
+    
+    # Manual stops (buses stopped by driver)
+    manual_stops = ActiveBus.objects.filter(
+        is_manual_stop=True,
+        is_active=True
+    ).select_related('bus').order_by('-last_updated')
+    
+    # Emergency contacts from settings
+    from django.conf import settings
+    emergency_contacts = getattr(settings, 'EMERGENCY_HELPLINES', [])
     
     context = {
         'active_emergencies': active_emergencies,
-        'emergency_count': active_emergencies.count()
+        'emergency_count': active_emergencies.count(),
+        'recent_accidents': recent_accidents,
+        'all_accidents': all_accidents,
+        'manual_stops': manual_stops,
+        'manual_stops_count': manual_stops.count(),
+        'total_accidents_today': total_accidents_today,
+        'total_accidents_week': total_accidents_week,
+        'total_accidents_all': total_accidents_all,
+        'affected_passengers_today': affected_passengers_today,
+        'emergency_contacts': emergency_contacts,
+        'emergency_contacts_count': len(emergency_contacts),
     }
     
     return render(request, 'my_amts/emergency_dashboard.html', context)

@@ -177,12 +177,34 @@
             <div class="emergency-icon">🚨</div>
             <h1>EMERGENCY ACCIDENT ALERT SYSTEM</h1>
             <p class="lead">AMTS Emergency Response Dashboard</p>
-            {% if emergency_count > 0 %}
-            <div class="alert alert-danger mt-3">
-                <h5>⚠️ ACTIVE EMERGENCIES: {{ emergency_count }}</h5>
-                <p class="mb-0">{{ emergency_count }} bus{{ emergency_count|pluralize:"es" }} currently in emergency state</p>
+            
+            <!-- Real-time Statistics -->
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <div class="alert alert-danger">
+                        <h3 class="mb-0">{{ emergency_count }}</h3>
+                        <small>Active Emergencies</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-warning">
+                        <h3 class="mb-0">{{ manual_stops_count }}</h3>
+                        <small>Manual Stops</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-info">
+                        <h3 class="mb-0">{{ total_accidents_today }}</h3>
+                        <small>Accidents Today</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-secondary">
+                        <h3 class="mb-0">{{ affected_passengers_today }}</h3>
+                        <small>Affected Passengers</small>
+                    </div>
+                </div>
             </div>
-            {% endif %}
         </div>
         
         <div class="row justify-content-center">
@@ -220,6 +242,176 @@
                         <button class="btn btn-warning" onclick="window.location.reload()">
                             🔄 Refresh Emergency Status
                         </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Manual Stops Section -->
+            {% if manual_stops %}
+            <div class="col-md-10 mb-4">
+                <div class="emergency-card">
+                    <h3 class="text-center mb-4 text-warning">⚠️ MANUAL STOPS</h3>
+                    
+                    {% for stop in manual_stops %}
+                    <div class="alert alert-warning mb-3">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 class="mb-2">🚌 Bus {{ stop.bus.bus_number }} - MANUAL STOP</h6>
+                                <p class="mb-1"><strong>📍 Location:</strong> {{ stop.current_location }}</p>
+                                <p class="mb-1"><strong>⏰ Status:</strong> {{ stop.status }}</p>
+                                <p class="mb-0"><strong>🕒 Last Updated:</strong> {{ stop.last_updated|date:"M d, Y H:i" }}</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <span class="badge bg-warning fs-6">STOPPED</span>
+                                <br><small class="text-muted">Speed: {{ stop.speed }} km/h</small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Recent Accidents Section -->
+            {% if recent_accidents %}
+            <div class="col-md-10 mb-4">
+                <div class="emergency-card">
+                    <h3 class="text-center mb-4 text-info">📊 RECENT ACCIDENTS (Last 24 Hours)</h3>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Bus Number</th>
+                                    <th>Location</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for accident in recent_accidents %}
+                                <tr>
+                                    <td><strong>Bus {{ accident.bus.bus_number }}</strong></td>
+                                    <td>{{ accident.current_location|truncatewords:5 }}</td>
+                                    <td>{{ accident.last_updated|date:"M d, H:i" }}</td>
+                                    <td><span class="badge bg-danger">Accident</span></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Emergency Statistics -->
+            <div class="col-md-10 mb-4">
+                <div class="emergency-card">
+                    <h3 class="text-center mb-4">📈 EMERGENCY STATISTICS</h3>
+                    
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="info-card">
+                                <h2 class="text-primary">{{ total_accidents_today }}</h2>
+                                <p class="mb-0">Accidents Today</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="info-card">
+                                <h2 class="text-warning">{{ total_accidents_week }}</h2>
+                                <p class="mb-0">Accidents This Week</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="info-card">
+                                <h2 class="text-danger">{{ total_accidents_all }}</h2>
+                                <p class="mb-0">Total Accidents</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row text-center mt-3">
+                        <div class="col-md-6 mb-3">
+                            <div class="info-card">
+                                <h2 class="text-success">{{ emergency_contacts_count }}</h2>
+                                <p class="mb-0">Emergency Contacts</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="info-card">
+                                <h2 class="text-info">{{ affected_passengers_today }}</h2>
+                                <p class="mb-0">Affected Passengers Today</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Emergency Contacts List -->
+            <div class="col-md-10 mb-4">
+                <div class="emergency-card">
+                    <h3 class="text-center mb-4">📧 EMERGENCY CONTACT LIST</h3>
+                    
+                    <div class="info-card">
+                        <h6>Configured Emergency Helplines:</h6>
+                        <ul class="mb-0">
+                            {% for contact in emergency_contacts %}
+                            <li>{{ contact }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <strong>📨 Email System Status:</strong> Active (Gmail SMTP)<br>
+                        <strong>🔐 Authentication:</strong> App Password Secured<br>
+                        <strong>⚡ Delivery Method:</strong> Real-time with batch processing
+                    </div>
+                </div>
+            </div>
+            
+            <!-- All Accidents History -->
+            {% if all_accidents %}
+            <div class="col-md-10 mb-4">
+                <div class="emergency-card">
+                    <h3 class="text-center mb-4">📜 ACCIDENT HISTORY (Last 10)</h3>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Bus</th>
+                                    <th>Location</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                    <th>GPS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for accident in all_accidents %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><strong>Bus {{ accident.bus.bus_number }}</strong></td>
+                                    <td>{{ accident.current_location|truncatewords:8 }}</td>
+                                    <td>{{ accident.last_updated|date:"M d, Y H:i" }}</td>
+                                    <td>
+                                        <span class="badge bg-danger">Accident</span>
+                                    </td>
+                                    <td>
+                                        {% if accident.latitude and accident.longitude %}
+                                        <a href="https://www.google.com/maps?q={{ accident.latitude }},{{ accident.longitude }}" 
+                                           target="_blank" class="btn btn-sm btn-outline-primary">
+                                            📍 View
+                                        </a>
+                                        {% else %}
+                                        <span class="text-muted">N/A</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

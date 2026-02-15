@@ -68,18 +68,133 @@ A comprehensive Django-based bus management system with **real-time tracking**, 
    ```bash
    python manage.py migrate
    python manage.py createsuperuser
-   python manage.py loaddata amts_data.json  # Load sample bus data
    ```
 
-5. **Start Development Server**
+5. **Load Bus Route Data**
+   
+   The system includes comprehensive bus route data for Ahmedabad. You can load it using:
+   
+   ```bash
+   # Load from the included amts_data.json file
+   python manage.py load_bus_data amts_data.json
+   ```
+   
+   **Alternative: Load Default Routes**
+   ```bash
+   # Load built-in default routes (if no file specified)
+   python manage.py load_bus_data
+   ```
+   
+   **What gets loaded:**
+   - 25+ AMTS bus routes covering major areas of Ahmedabad
+   - Complete GPS coordinates for all bus stops
+   - Route information including:
+     - Bus numbers: 1, 2, 3, 4, 5, 11, 28, 31_5, 33, 49, 50, 56, 58, 61, 66, 69, 75, 83, 87, 89, 101-105, 130, 160, 401
+     - Major areas: Naroda, Maninagar, Paldi, Vastrapur, Chandkheda, Sabarmati, Bopal, etc.
+     - 200+ unique bus stops with accurate GPS coordinates
+
+6. **Start Development Server**
    ```bash
    python manage.py runserver
    ```
 
-6. **Access Application**
+7. **Access Application**
    - **Main Website**: http://127.0.0.1:8000/
    - **Emergency Dashboard**: http://127.0.0.1:8000/emergency-dashboard/
    - **Admin Panel**: http://127.0.0.1:8000/admin/
+
+## 🚍 Bus Route Data Management
+
+### 📊 **amts_data.json Structure**
+
+The `amts_data.json` file contains comprehensive bus route information:
+
+```json
+[
+  {
+    "bus_number": "401",
+    "stops": [
+      {
+        "name": "Vasna Terminus",
+        "coordinates": [23.0075, 72.5159]
+      },
+      {
+        "name": "Anandnagar",
+        "coordinates": [23.0350, 72.5320]
+      }
+      // ... more stops
+    ]
+  }
+  // ... more buses
+]
+```
+
+### 🔧 **load_bus_data Management Command**
+
+**Features:**
+- **Smart Upsert** - Creates new buses or updates existing ones (no data loss)
+- **Validation** - Checks bus numbers, stop names, and GPS coordinates
+- **Flexible Loading** - Load from custom JSON file or use built-in defaults
+- **Progress Reporting** - Shows created/updated count for each bus
+
+**Usage Examples:**
+
+```bash
+# Load from custom JSON file
+python manage.py load_bus_data path/to/custom_routes.json
+
+# Load built-in default routes
+python manage.py load_bus_data
+
+# Load from project's amts_data.json
+python manage.py load_bus_data amts_data.json
+```
+
+**Command Output:**
+```
+Successfully created bus 401
+Successfully updated bus 56
+Operation Complete: 15 created, 10 updated.
+```
+
+### 📍 **Included Bus Routes**
+
+The system includes these major AMTS routes:
+
+| Bus No. | Route Description | Key Areas |
+|---------|------------------|-----------|
+| **401** | Vasna - Chandkheda | Paldi, Usmanpura, Vadaj |
+| **56** | Naroda - Lal Darwaja | Thakkar Nagar, Kalupur |
+| **130** | Naroda - Anjali | Ghodasar, Isanpur, Narol |
+| **31_5** | Lal Darwaja - LJ College | Vasna, Sarkhej, Sanand |
+| **11** | Vadaj - Maninagar | Usmanpura, Paldi, Kankaria |
+| **89** | Chandkheda - Vastrapur | Motera, Sabarmati, Navrangpura |
+| **1** | Maninagar - Ghuma | ISRO, Bopal, Sterling City |
+| **49** | Godhavi - Adinath Nagar | Sola, Science City, Thaltej |
+| **160** | High Court - Hatkeshwar | Thaltej, Bopal, Sarkhej |
+
+**Coverage Areas:**
+- North: Naroda, Chandkheda, Motera, Sabarmati
+- South: Maninagar, Vasna, Sarkhej, Bopal
+- East: Ghodasar, Isanpur, Narol, Odhav
+- West: Vastrapur, Thaltej, Science City, Sola
+- Central: Paldi, Navrangpura, Kalupur, Lal Darwaja
+
+### 🗺️ **GPS Coordinate System**
+
+All bus stops include accurate GPS coordinates:
+- **Latitude Range**: 22.95 to 23.12 (Ahmedabad city limits)
+- **Longitude Range**: 72.46 to 72.67 (Ahmedabad city limits)
+- **Coordinate Format**: `[latitude, longitude]`
+- **Precision**: 4-5 decimal places for accurate location
+
+**Example Stop Data:**
+```json
+{
+  "name": "Paldi",
+  "coordinates": [23.0515, 72.5405]
+}
+```
 
 ## 🚨 Emergency Safety System
 

@@ -496,6 +496,320 @@
         .custom-notification.info:hover {
             box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
         }
+
+        /* Email Sending Progress Bar */
+        .email-progress-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10001;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .email-progress-overlay.show {
+            display: flex;
+        }
+
+        .email-progress-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            min-width: 600px;
+            max-width: 700px;
+        }
+
+        .email-progress-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .email-progress-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: emailPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes emailPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .email-progress-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+
+        .email-progress-subtitle {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .email-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+        }
+
+        .email-stat {
+            text-align: center;
+        }
+
+        .email-stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2196F3;
+        }
+
+        .email-stat-number.sent {
+            color: #4CAF50;
+        }
+
+        .email-stat-number.total {
+            color: #FF9800;
+        }
+
+        .email-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .email-progress-bar-container {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #4CAF50);
+            background-size: 200% 100%;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            animation: progressShine 2s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes progressShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .email-progress-percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .email-sending-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .email-sending-item {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .email-sending-item.success {
+            border-left: 4px solid #4CAF50;
+        }
+
+        .email-sending-item.sending {
+            border-left: 4px solid #2196F3;
+        }
+
+        .email-sending-icon {
+            font-size: 18px;
+        }
+
+        .email-sending-text {
+            flex: 1;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .email-complete-message {
+            text-align: center;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .email-complete-message.show {
+            display: block;
+        }
+
+        .email-complete-message h4 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        /* Loading Bar Styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            min-width: 350px;
+            max-width: 450px;
+        }
+
+        .loading-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: busMove 2s ease-in-out infinite;
+        }
+
+        @keyframes busMove {
+            0%, 100% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+        }
+
+        .loading-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+
+        .loading-message {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .loading-bar-container {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #4CAF50, #2196F3);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            animation: loadingProgress 2s ease-in-out infinite;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes loadingProgress {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .loading-percentage {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #2196F3;
+            font-weight: 600;
+        }
+
+        .loading-steps {
+            margin-top: 15px;
+            text-align: left;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .loading-step {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .loading-step.completed {
+            color: #4CAF50;
+        }
+
+        .loading-step.active {
+            color: #2196F3;
+            font-weight: 600;
+        }
+
+        .loading-step-icon {
+            font-size: 16px;
+        }
             transform-origin: left;
             animation: progress 5s linear;
         }
@@ -1065,6 +1379,75 @@
 
 <body>
     {% csrf_token %}
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-container">
+            <div class="loading-icon">🚌</div>
+            <div class="loading-title">Loading Bus Route</div>
+            <div class="loading-message">Please wait while we prepare your live tracking...</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+            <div class="loading-percentage" id="loadingPercentage">0%</div>
+            <div class="loading-steps">
+                <div class="loading-step" id="step1">
+                    <span class="loading-step-icon">⏳</span>
+                    <span>Fetching bus route data...</span>
+                </div>
+                <div class="loading-step" id="step2">
+                    <span class="loading-step-icon">⏳</span>
+                    <span>Loading map and GPS coordinates...</span>
+                </div>
+                <div class="loading-step" id="step3">
+                    <span class="loading-step-icon">⏳</span>
+                    <span>Initializing live tracking...</span>
+                </div>
+                <div class="loading-step" id="step4">
+                    <span class="loading-step-icon">⏳</span>
+                    <span>Preparing bus location updates...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Sending Progress Overlay -->
+    <div class="email-progress-overlay" id="emailProgressOverlay">
+        <div class="email-progress-container">
+            <div class="email-progress-header">
+                <div class="email-progress-icon">📧</div>
+                <div class="email-progress-title">Sending Emergency Emails</div>
+                <div class="email-progress-subtitle">Please wait while we notify all emergency contacts</div>
+            </div>
+
+            <div class="email-stats">
+                <div class="email-stat">
+                    <div class="email-stat-number sent" id="emailsSent">0</div>
+                    <div class="email-stat-label">Emails Sent</div>
+                </div>
+                <div class="email-stat">
+                    <div class="email-stat-number total" id="emailsTotal">0</div>
+                    <div class="email-stat-label">Total Emails</div>
+                </div>
+            </div>
+
+            <div class="email-progress-bar-container">
+                <div class="email-progress-bar" id="emailProgressBar">
+                    <span id="emailProgressPercentage">0%</span>
+                </div>
+            </div>
+
+            <div class="email-sending-list" id="emailSendingList">
+                <!-- Email items will be added here dynamically -->
+            </div>
+
+            <div class="email-complete-message" id="emailCompleteMessage">
+                <h4>✅ All Emergency Emails Sent Successfully!</h4>
+                <p>All emergency contacts have been notified. Redirecting to dashboard...</p>
+            </div>
+        </div>
+    </div>
+    
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
@@ -2715,7 +3098,14 @@
 
         async function showLiveTracking(busNumber, fromLocation, toLocation, busId = null) {
             window.notificationShown = false;
+            
+            // Show loading overlay
+            showLoadingBar();
+            
             try {
+                // Step 1: Fetching bus route data
+                updateLoadingProgress(1, 25, 'Fetching bus route data...');
+                
                 // Set bus number display
                 document.getElementById('busNumberDisplay').textContent = busNumber;
 
@@ -2736,8 +3126,12 @@
                 }).then(res => res.json());
 
                 if (!bus.status === 'success' || !bus.routes.length) {
+                    hideLoadingBar();
                     throw new Error('Bus route not found');
                 }
+
+                // Step 2: Loading map and GPS coordinates
+                updateLoadingProgress(2, 50, 'Loading map and GPS coordinates...');
 
                 const route = bus.routes[0];
                 const allStops = route.route_parts[0].stops;
@@ -2750,6 +3144,9 @@
 
                 const modal = new bootstrap.Modal(document.getElementById('liveTrackingModal'));
                 modal.show();
+
+                // Step 3: Initializing live tracking
+                updateLoadingProgress(3, 75, 'Initializing live tracking...');
 
                 setTimeout(async () => {
                     if (trackingMap) {
@@ -2780,6 +3177,9 @@
                     document.getElementById('trackingMap').appendChild(controlsDiv);
                     // Prevent map clicks propagating to controls
                     L.DomEvent.disableClickPropagation(controlsDiv);
+
+                    // Step 4: Preparing bus location updates
+                    updateLoadingProgress(4, 90, 'Preparing bus location updates...');
 
                     // Generate path
                     const completePath = [];
@@ -2882,6 +3282,12 @@
                         updateStatusPanel(completePath[currentIndex], stops, completePath, currentIndex, true);
                     }, 150);
 
+                    // Complete loading - hide loading bar
+                    updateLoadingProgress(4, 100, 'Ready!');
+                    setTimeout(() => {
+                        hideLoadingBar();
+                    }, 500);
+
                     // Cleanup on close
                     document.getElementById('liveTrackingModal').addEventListener('hidden.bs.modal', function () {
                         clearInterval(trackingInterval);
@@ -2893,6 +3299,8 @@
 
             } catch (error) {
                 console.error('Error in live tracking:', error);
+                hideLoadingBar();
+                alert('Error loading bus tracking. Please try again.');
             }
         }
 
@@ -2961,7 +3369,7 @@
                 // Show loading notification
                 showCustomNotification(
                     "🚨 EMERGENCY SAFETY SYSTEM ACTIVATING",
-                    "Sending critical emergency notifications to all contacts",
+                    "Sending critical emergency notifications - Priority: Emergency Helplines First",
                     "🚨",
                     "emergency"
                 );
@@ -2990,6 +3398,26 @@
 
                 console.log('🚨 Triggering Emergency System:', emergencyData);
 
+                // PRIORITY ORDER: Emergency Helplines FIRST (from settings.py)
+                const priorityEmails = [
+                    { email: 'vaibhavmevada796@gmail.com', label: '🚨 Primary Emergency Contact' },
+                    { email: 'paresh07suva@gmail.com', label: '🚨 Emergency Contact - Paresh' },
+                    { email: 'emergency@amts.gov.in', label: '🚨 AMTS Emergency Helpline' },
+                    { email: 'control.room@amts.gov.in', label: '🚨 AMTS Control Room' },
+                    { email: 'safety@amts.gov.in', label: '🚨 AMTS Safety Department' },
+                    { email: 'thakararyan9106@gmail.com', label: '🚨 Emergency Contact - Aryan' },
+                    { email: 'admin@amts.gov.in', label: '🚨 AMTS Admin' }
+                ];
+
+                // Show email progress bar with total count
+                showEmailProgress(priorityEmails.length);
+
+                // Start simulating email progress with priority labels
+                const progressPromise = simulateEmailProgress(
+                    priorityEmails.length, 
+                    priorityEmails.map(item => item.label)
+                );
+
                 // Call emergency notification API
                 const response = await fetch('/api/emergency-accident/', {
                     method: 'POST',
@@ -3002,13 +3430,16 @@
 
                 const result = await response.json();
 
+                // Wait for progress simulation to complete
+                await progressPromise;
+
                 if (result.status === 'success') {
                     const emergencyResponse = result.emergency_response;
                     
                     // Show success notification with details
                     showCustomNotification(
                         "✅ EMERGENCY SAFETY SYSTEM ACTIVATED",
-                        `${emergencyResponse.notifications_sent} emergency emails sent successfully to all contacts`,
+                        `All ${priorityEmails.length} priority emergency helplines notified successfully!`,
                         "✅",
                         "success"
                     );
@@ -3016,6 +3447,7 @@
                     // Show detailed alert
                     alert(
                         `🚨 EMERGENCY SYSTEM ACTIVATED SUCCESSFULLY! 🚨\n\n` +
+                        `📧 Priority Helpline Emails Sent: ${priorityEmails.length}\n` +
                         `📧 Total Emails Sent: ${emergencyResponse.notifications_sent}\n` +
                         `👥 Affected Passengers: ${emergencyResponse.affected_passengers}\n` +
                         `📢 Broadcast Alerts: ${emergencyResponse.broadcast_alerts_sent || emergencyResponse.family_alerts_sent}\n` +
@@ -3024,30 +3456,35 @@
                         `🗺️ Google Maps: ${emergencyResponse.google_maps_link}\n\n` +
                         `Bus Status: ${emergencyResponse.bus_status}\n` +
                         `Location Frozen: ${emergencyResponse.location_frozen ? 'YES' : 'NO'}\n\n` +
-                        `✅ All emergency contacts have been notified!\n` +
+                        `✅ All priority emergency helplines have been notified FIRST!\n` +
                         `📧 Check your Gmail: vaibhavmevada796@gmail.com\n` +
-                        `📧 Check test email: cipaha2099@gxuzi.com\n\n` +
+                        `📧 Check Paresh email: paresh07suva@gmail.com\n\n` +
                         `🚨 Redirecting to Emergency Dashboard...`
                     );
 
                     console.log('✅ Emergency Response:', result);
                     
-                    // Redirect to emergency dashboard after 2 seconds
+                    // Hide email progress after 2 seconds
                     setTimeout(() => {
+                        hideEmailProgress();
+                        // Redirect to emergency dashboard
                         window.location.href = '/emergency-dashboard/';
                     }, 2000);
                     
                 } else {
+                    hideEmailProgress();
                     throw new Error(result.message || 'Emergency system failed');
                 }
 
             } catch (error) {
                 console.error('❌ Emergency system error:', error);
+                hideEmailProgress();
                 
                 showCustomNotification(
                     "❌ Emergency System Error",
                     `Failed to send notifications: ${error.message}`,
-                    "❌"
+                    "❌",
+                    "error"
                 );
                 
                 alert(
@@ -3254,6 +3691,132 @@
             audio.play().catch(e => console.log('Audio play failed:', e));
         }
 
+        // Loading Bar Helper Functions
+        function showLoadingBar() {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('show');
+            // Reset progress
+            document.getElementById('loadingBar').style.width = '0%';
+            document.getElementById('loadingPercentage').textContent = '0%';
+            // Reset all steps
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step${i}`);
+                step.classList.remove('completed', 'active');
+                step.querySelector('.loading-step-icon').textContent = '⏳';
+            }
+        }
+
+        function hideLoadingBar() {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.remove('show');
+        }
+
+        function updateLoadingProgress(step, percentage, message) {
+            // Update progress bar
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingPercentage = document.getElementById('loadingPercentage');
+            loadingBar.style.width = percentage + '%';
+            loadingPercentage.textContent = percentage + '%';
+
+            // Update message
+            document.querySelector('.loading-message').textContent = message;
+
+            // Update steps
+            for (let i = 1; i <= 4; i++) {
+                const stepElement = document.getElementById(`step${i}`);
+                const icon = stepElement.querySelector('.loading-step-icon');
+                
+                if (i < step) {
+                    // Completed steps
+                    stepElement.classList.remove('active');
+                    stepElement.classList.add('completed');
+                    icon.textContent = '✅';
+                } else if (i === step) {
+                    // Current step
+                    stepElement.classList.remove('completed');
+                    stepElement.classList.add('active');
+                    icon.textContent = '🔄';
+                } else {
+                    // Future steps
+                    stepElement.classList.remove('completed', 'active');
+                    icon.textContent = '⏳';
+                }
+            }
+        }
+
+        // Email Progress Bar Helper Functions
+        function showEmailProgress(totalEmails) {
+            const overlay = document.getElementById('emailProgressOverlay');
+            overlay.classList.add('show');
+            
+            // Reset progress
+            document.getElementById('emailsSent').textContent = '0';
+            document.getElementById('emailsTotal').textContent = totalEmails;
+            document.getElementById('emailProgressBar').style.width = '0%';
+            document.getElementById('emailProgressPercentage').textContent = '0%';
+            document.getElementById('emailSendingList').innerHTML = '';
+            document.getElementById('emailCompleteMessage').classList.remove('show');
+        }
+
+        function hideEmailProgress() {
+            const overlay = document.getElementById('emailProgressOverlay');
+            overlay.classList.remove('show');
+        }
+
+        function updateEmailProgress(sent, total, recipientEmail = null) {
+            // Update counters
+            document.getElementById('emailsSent').textContent = sent;
+            document.getElementById('emailsTotal').textContent = total;
+            
+            // Calculate percentage
+            const percentage = Math.round((sent / total) * 100);
+            document.getElementById('emailProgressBar').style.width = percentage + '%';
+            document.getElementById('emailProgressPercentage').textContent = percentage + '%';
+            
+            // Add email to list if recipient provided
+            if (recipientEmail) {
+                const emailList = document.getElementById('emailSendingList');
+                const emailItem = document.createElement('div');
+                emailItem.className = 'email-sending-item success';
+                emailItem.innerHTML = `
+                    <span class="email-sending-icon">✅</span>
+                    <span class="email-sending-text">${recipientEmail}</span>
+                `;
+                emailList.appendChild(emailItem);
+                
+                // Auto-scroll to bottom
+                emailList.scrollTop = emailList.scrollHeight;
+            }
+            
+            // Show completion message if all sent
+            if (sent >= total) {
+                setTimeout(() => {
+                    document.getElementById('emailCompleteMessage').classList.add('show');
+                }, 500);
+            }
+        }
+
+        // Simulate email sending progress (since backend doesn't support real-time updates)
+        function simulateEmailProgress(totalEmails, recipients) {
+            return new Promise((resolve) => {
+                let sent = 0;
+                const interval = 800; // 800ms per email
+                
+                const sendNext = () => {
+                    if (sent < totalEmails) {
+                        sent++;
+                        const recipient = recipients[sent - 1] || `Contact ${sent}`;
+                        updateEmailProgress(sent, totalEmails, recipient);
+                        setTimeout(sendNext, interval);
+                    } else {
+                        resolve();
+                    }
+                };
+                
+                sendNext();
+            });
+        }
+
         /**
          * Auto-Track My Bus Feature
          * Automatically fills search form and starts live tracking when coming from booking page
@@ -3318,10 +3881,13 @@
                     `This will immediately:\n` +
                     `• Change bus status to 'ACCIDENT DETECTED'\n` +
                     `• Freeze bus at current GPS location\n` +
-                    `• Send emergency emails to:\n` +
-                    `  - All passengers with bookings on Bus ${busNumber}\n` +
-                    `  - ALL registered users (emergency broadcast)\n` +
-                    `  - Emergency helplines (including vaibhavmevada796@gmail.com & cipaha2099@gxuzi.com)\n\n` +
+                    `• Send PRIORITY emails to Emergency Helplines FIRST:\n` +
+                    `  ✓ vaibhavmevada796@gmail.com (Primary)\n` +
+                    `  ✓ paresh07suva@gmail.com\n` +
+                    `  ✓ AMTS Emergency Services\n` +
+                    `  ✓ AMTS Control Room\n` +
+                    `  ✓ AMTS Safety Department\n` +
+                    `• Then notify passengers with bookings\n\n` +
                     `⚠️ This will trigger REAL emergency notifications via Gmail SMTP!\n\n` +
                     `Continue with accident simulation?`
                 );
@@ -3333,7 +3899,7 @@
                 // Show loading notification
                 showCustomNotification(
                     "🚨 EMERGENCY SYSTEM ACTIVATING",
-                    `Triggering accident simulation for Bus ${busNumber}`,
+                    `Priority: Notifying Emergency Helplines First for Bus ${busNumber}`,
                     "🚨",
                     "emergency"
                 );
@@ -3348,6 +3914,26 @@
 
                 console.log('🚨 Triggering Emergency System from Search:', emergencyData);
 
+                // PRIORITY ORDER: Emergency Helplines FIRST (from settings.py)
+                const priorityEmails = [
+                    { email: 'vaibhavmevada796@gmail.com', label: '🚨 Primary Emergency Contact' },
+                    { email: 'paresh07suva@gmail.com', label: '🚨 Emergency Contact - Paresh' },
+                    { email: 'emergency@amts.gov.in', label: '🚨 AMTS Emergency Helpline' },
+                    { email: 'control.room@amts.gov.in', label: '🚨 AMTS Control Room' },
+                    { email: 'safety@amts.gov.in', label: '🚨 AMTS Safety Department' },
+                    { email: 'thakararyan9106@gmail.com', label: '🚨 Emergency Contact - Aryan' },
+                    { email: 'admin@amts.gov.in', label: '🚨 AMTS Admin' }
+                ];
+
+                // Show email progress bar with total count
+                showEmailProgress(priorityEmails.length);
+
+                // Start simulating email progress with priority labels
+                const progressPromise = simulateEmailProgress(
+                    priorityEmails.length, 
+                    priorityEmails.map(item => item.label)
+                );
+
                 // Call emergency notification API
                 const response = await fetch('/api/emergency-accident/', {
                     method: 'POST',
@@ -3360,13 +3946,16 @@
 
                 const result = await response.json();
 
+                // Wait for progress simulation to complete
+                await progressPromise;
+
                 if (result.status === 'success') {
                     const emergencyResponse = result.emergency_response;
                     
                     // Show success notification
                     showCustomNotification(
                         "✅ EMERGENCY SAFETY SYSTEM ACTIVATED",
-                        `${emergencyResponse.notifications_sent} emergency emails sent successfully`,
+                        `All ${priorityEmails.length} priority emergency helplines notified successfully!`,
                         "✅",
                         "success"
                     );
@@ -3375,6 +3964,8 @@
                     alert(
                         `🚨 EMERGENCY SYSTEM ACTIVATED SUCCESSFULLY! 🚨\n\n` +
                         `Bus ${busNumber} Emergency Response:\n\n` +
+                        `🚨 PRIORITY HELPLINES NOTIFIED FIRST:\n` +
+                        `📧 Priority Helpline Emails: ${priorityEmails.length}\n` +
                         `📧 Total Emails Sent: ${emergencyResponse.notifications_sent}\n` +
                         `👥 Affected Passengers: ${emergencyResponse.affected_passengers}\n` +
                         `📢 Broadcast Alerts: ${emergencyResponse.broadcast_alerts_sent || emergencyResponse.family_alerts_sent}\n` +
@@ -3383,30 +3974,35 @@
                         `🗺️ Google Maps: ${emergencyResponse.google_maps_link}\n\n` +
                         `Bus Status: ${emergencyResponse.bus_status}\n` +
                         `Location Frozen: ${emergencyResponse.location_frozen ? 'YES' : 'NO'}\n\n` +
-                        `✅ All emergency contacts have been notified!\n` +
-                        `📧 Check your Gmail: vaibhavmevada796@gmail.com\n` +
-                        `📧 Check test email: cipaha2099@gxuzi.com\n\n` +
+                        `✅ All priority emergency helplines notified FIRST!\n` +
+                        `📧 Primary: vaibhavmevada796@gmail.com\n` +
+                        `📧 Paresh: paresh07suva@gmail.com\n\n` +
                         `🚨 Redirecting to Emergency Dashboard...`
                     );
 
                     console.log('✅ Emergency Response:', result);
                     
-                    // Redirect to emergency dashboard after 2 seconds
+                    // Hide email progress after 2 seconds
                     setTimeout(() => {
+                        hideEmailProgress();
+                        // Redirect to emergency dashboard
                         window.location.href = '/emergency-dashboard/';
                     }, 2000);
                     
                 } else {
+                    hideEmailProgress();
                     throw new Error(result.message || 'Emergency system failed');
                 }
 
             } catch (error) {
                 console.error('❌ Emergency system error:', error);
+                hideEmailProgress();
                 
                 showCustomNotification(
                     "❌ Emergency System Error",
                     `Failed to send notifications: ${error.message}`,
-                    "❌"
+                    "❌",
+                    "error"
                 );
                 
                 alert(

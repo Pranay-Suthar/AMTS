@@ -181,6 +181,8 @@ EMERGENCY_HELPLINES = [
     'emergency@amts.gov.in',
     'control.room@amts.gov.in',
     'safety@amts.gov.in',
+    'thakararyan9106@gmail.com',
+    'samarthpatel310106@gmail.com',
     'admin@amts.gov.in'
 ]
 
