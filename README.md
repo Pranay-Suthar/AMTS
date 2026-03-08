@@ -42,8 +42,8 @@ DEBUG=True
 python manage.py migrate
 python manage.py createsuperuser
 
-# Load bus routes (29 routes, 200+ stops)
-python manage.py load_bus_data
+# Load bus routes (51 routes, 400+ stops)
+python manage.py load_bus_data amts_data.json
 
 # Start server
 python manage.py runserver
@@ -61,26 +61,42 @@ python manage.py runserver
 
 ### Available Routes
 
-29 bus routes covering Ahmedabad with 200+ stops including:
+51 comprehensive bus routes covering all major areas of Ahmedabad with 400+ stops:
 
-| Bus | Route | Stops |
-|-----|-------|-------|
-| 401 | Vasna Terminus ↔ Chandkheda | 29 |
-| 130 | Naroda ↔ Anjali Char Rasta | 16 |
-| 56 | Naroda ↔ Lal Darwaja | 11 |
-| 58 | Thakkar Nagar ↔ Paldi | 12 |
-| 33 | Gokul Park ↔ Lal Darwaja | 12 |
-| 31_5 | Lal Darwaja ↔ LJ College | 11 |
+| Bus | Route | Stops | Coverage |
+|-----|-------|-------|----------|
+| 401 | Vasna Terminus ↔ Chandkheda | 29 | Longest Route |
+| 130 | Naroda ↔ Anjali Char Rasta | 16 | East Zone |
+| 56 | Naroda ↔ Lal Darwaja | 11 | North-Central |
+| 58 | Thakkar Nagar ↔ Paldi | 12 | Central |
+| 33 | Gokul Park ↔ Lal Darwaja | 12 | East-Central |
+| 31_5 | Lal Darwaja ↔ LJ College | 11 | South-West |
+| 6 | Satellite ↔ Gujarat University | 8 | Premium West |
+| 7 | SG Highway ↔ Chandkheda | 8 | SG Highway Corridor |
+| 8 | Maninagar Railway ↔ Mithakhali | 8 | East-West |
+| 9 | Naranpura ↔ Ashram Road | 8 | North-Central |
+| 10 | Nikol ↔ Kalupur Railway | 8 | Industrial East |
 
-**Additional routes**: 1, 2, 3, 4, 5, 11, 28, 49, 50, 61, 66, 69, 75, 83, 87, 89, 101-105, 160
+**All routes**: 1-10, 11-30, 31_5, 33, 49-50, 56, 58, 61, 66, 69, 75, 83, 87, 89, 101-105, 130, 160, 401
 
 ### Coverage Areas
 
-- **North**: Naroda, Chandkheda, Motera, Sabarmati
-- **South**: Maninagar, Vasna, Sarkhej, Bopal
-- **East**: Ghodasar, Isanpur, Narol, Odhav
-- **West**: Vastrapur, Thaltej, Science City, Sola
-- **Central**: Paldi, Navrangpura, Kalupur, Lal Darwaja
+**Premium & Commercial Zones:**
+- **SG Highway Corridor**: Prahlad Nagar, Bodakdev, Satellite, Shapath Hexa
+- **CG Road Area**: Ambawadi, Memnagar, Law Garden, Parimal Garden
+- **West Ahmedabad**: Vastrapur, Thaltej, Science City, Sola, Ghatlodia
+
+**Residential Areas:**
+- **North**: Naroda, Chandkheda, Motera, Sabarmati, Gota, Sargasan
+- **South**: Maninagar, Vasna, Sarkhej, Bopal, Ghuma
+- **East**: Ghodasar, Isanpur, Narol, Nikol, Odhav, Vastral
+- **Central**: Paldi, Navrangpura, Kalupur, Lal Darwaja, Ellisbridge
+
+**Key Landmarks:**
+- Railway Stations: Maninagar, Kalupur
+- Educational: Gujarat University, LD Engineering College
+- Commercial: CG Road, Ashram Road, Relief Road
+- Recreation: Kankaria Lake, Vastrapur Lake, Science City
 
 ---
 
@@ -176,6 +192,7 @@ AMTS/
 
 ---
 
-**Version**: 2.0 | **Status**: Production Ready | **Updated**: January 2026
+**Version**: 2.1 | **Status**: Production Ready | **Updated**: January 2026  
+**Bus Routes**: 51 | **Bus Stops**: 400+ | **Coverage**: Complete Ahmedabad
 
 Developed for Ahmedabad Municipal Transport Service
