@@ -1392,19 +1392,19 @@
             <div class="loading-percentage" id="loadingPercentage">0%</div>
             <div class="loading-steps">
                 <div class="loading-step" id="step1">
-                    <span class="loading-step-icon">⏳</span>
+                    <span class="loading-step-icon">—</span>
                     <span>Fetching bus route data...</span>
                 </div>
                 <div class="loading-step" id="step2">
-                    <span class="loading-step-icon">⏳</span>
+                    <span class="loading-step-icon">—</span>
                     <span>Loading map and GPS coordinates...</span>
                 </div>
                 <div class="loading-step" id="step3">
-                    <span class="loading-step-icon">⏳</span>
+                    <span class="loading-step-icon">—</span>
                     <span>Initializing live tracking...</span>
                 </div>
                 <div class="loading-step" id="step4">
-                    <span class="loading-step-icon">⏳</span>
+                    <span class="loading-step-icon">—</span>
                     <span>Preparing bus location updates...</span>
                 </div>
             </div>
@@ -1442,7 +1442,7 @@
             </div>
 
             <div class="email-complete-message" id="emailCompleteMessage">
-                <h4>✅ All Emergency Emails Sent Successfully!</h4>
+                <h4>All Emergency Emails Sent Successfully!</h4>
                 <p>All emergency contacts have been notified. Redirecting to dashboard...</p>
             </div>
         </div>
@@ -3625,7 +3625,7 @@
                         fromStop.style.borderLeftColor = '#ffc107';
                     } else {
                         document.getElementById('boardingTime').textContent =
-                            '✅ Bus has passed this stop';
+                            'Bus has passed this stop';
                         fromStop.style.backgroundColor = 'rgba(220, 53, 69, 0.1)';
                         fromStop.style.borderLeftColor = '#dc3545';
                     }
@@ -3649,7 +3649,7 @@
                         toStop.style.borderLeftColor = '#17a2b8';
                     } else {
                         document.getElementById('arrivalTime').textContent =
-                            '✅ Bus has passed your destination';
+                            'Bus has passed your destination';
                         toStop.style.backgroundColor = 'rgba(220, 53, 69, 0.1)';
                         toStop.style.borderLeftColor = '#dc3545';
                     }
@@ -3730,16 +3730,16 @@
                     // Completed steps
                     stepElement.classList.remove('active');
                     stepElement.classList.add('completed');
-                    icon.textContent = '✅';
+                    icon.textContent = '✓';
                 } else if (i === step) {
                     // Current step
                     stepElement.classList.remove('completed');
                     stepElement.classList.add('active');
-                    icon.textContent = '🔄';
+                    icon.textContent = '›';
                 } else {
                     // Future steps
                     stepElement.classList.remove('completed', 'active');
-                    icon.textContent = '⏳';
+                    icon.textContent = '—';
                 }
             }
         }
@@ -3779,7 +3779,7 @@
                 const emailItem = document.createElement('div');
                 emailItem.className = 'email-sending-item success';
                 emailItem.innerHTML = `
-                    <span class="email-sending-icon">✅</span>
+                    <span class="email-sending-icon">✓</span>
                     <span class="email-sending-text">${recipientEmail}</span>
                 `;
                 emailList.appendChild(emailItem);

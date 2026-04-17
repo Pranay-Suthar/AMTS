@@ -616,31 +616,31 @@
         <div class="dashboard-header">
             <div class="dashboard-title">
                 <div>
-                    <h1>🚨 Emergency Response Dashboard</h1>
+                    <h1>Emergency Response Dashboard</h1>
                     <p class="dashboard-subtitle">AMTS Accident Alert & Management System</p>
                 </div>
             </div>
             <div>
-                <button class="btn-link" onclick="window.location.reload()">🔄 Refresh</button>
+                <button class="btn-link" onclick="window.location.reload()">Refresh</button>
             </div>
         </div>
         
         <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card danger">
-                <div class="stat-label">🚨 Active Emergencies</div>
+                <div class="stat-label">Active Emergencies</div>
                 <div class="stat-value">{{ emergency_count }}</div>
             </div>
             <div class="stat-card warning">
-                <div class="stat-label">⚠️ Manual Stops</div>
+                <div class="stat-label">Manual Stops</div>
                 <div class="stat-value">{{ manual_stops_count }}</div>
             </div>
             <div class="stat-card info">
-                <div class="stat-label">📊 Accidents Today</div>
+                <div class="stat-label">Accidents Today</div>
                 <div class="stat-value">{{ total_accidents_today }}</div>
             </div>
             <div class="stat-card success">
-                <div class="stat-label">👥 Affected Passengers</div>
+                <div class="stat-label">Affected Passengers</div>
                 <div class="stat-value">{{ affected_passengers_today }}</div>
             </div>
         </div>
@@ -653,25 +653,27 @@
                 <div class="dashboard-card">
                     <div class="card-header">
                         <div>
-                            <h3 class="card-title">🚨 Active Emergencies</h3>
+                            <h3 class="card-title">Active Emergencies</h3>
                             <p class="card-subtitle">Real-time accident alerts requiring immediate attention</p>
                         </div>
                     </div>
                     <div class="emergency-list">
                         {% for emergency in active_emergencies %}
                         <div class="emergency-item critical">
-                            <div class="emergency-icon critical">🚌</div>
+                        <div class="emergency-icon critical">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                            </div>
                             <div class="emergency-content">
                                 <div class="emergency-title">
                                     <span class="status-indicator active"></span>
                                     Bus {{ emergency.bus.bus_number }} - ACCIDENT DETECTED
                                 </div>
                                 <div class="emergency-details">
-                                    <span>📍 {{ emergency.current_location }}</span>
-                                    <span>⏱️ {{ emergency.last_updated|date:"M d, H:i" }}</span>
+                                    <span>{{ emergency.current_location }}</span>
+                                    <span>{{ emergency.last_updated|date:"M d, H:i" }}</span>
                                     {% if emergency.latitude and emergency.longitude %}
                                     <a href="https://www.google.com/maps?q={{ emergency.latitude }},{{ emergency.longitude }}" target="_blank" class="btn-link">
-                                        🗺️ View Location
+                                        View Location
                                     </a>
                                     {% endif %}
                                 </div>
@@ -687,22 +689,24 @@
                 <div class="dashboard-card" style="margin-top: 20px;">
                     <div class="card-header">
                         <div>
-                            <h3 class="card-title">⚠️ Manual Stops</h3>
+                            <h3 class="card-title">Manual Stops</h3>
                             <p class="card-subtitle">Buses currently stopped manually</p>
                         </div>
                     </div>
                     <div class="emergency-list">
                         {% for stop in manual_stops %}
                         <div class="emergency-item warning">
-                            <div class="emergency-icon warning">🚏</div>
+                        <div class="emergency-icon warning">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5"><path d="M12 2L2 19h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            </div>
                             <div class="emergency-content">
                                 <div class="emergency-title">
                                     <span class="status-indicator stopped"></span>
                                     Bus {{ stop.bus.bus_number }} - MANUAL STOP
                                 </div>
                                 <div class="emergency-details">
-                                    <span>📍 {{ stop.current_location }}</span>
-                                    <span>⏱️ {{ stop.last_updated|date:"M d, H:i" }}</span>
+                                    <span>{{ stop.current_location }}</span>
+                                    <span>{{ stop.last_updated|date:"M d, H:i" }}</span>
                                 </div>
                             </div>
                             <span class="emergency-badge-small badge-warning">STOPPED</span>
@@ -717,7 +721,7 @@
                 <div class="dashboard-card" style="margin-top: 20px;">
                     <div class="card-header">
                         <div>
-                            <h3 class="card-title">📊 Recent Accidents (24 Hours)</h3>
+                            <h3 class="card-title">Recent Accidents (24 Hours)</h3>
                             <p class="card-subtitle">Latest accident reports and incidents</p>
                         </div>
                     </div>
@@ -750,14 +754,14 @@
                 <div class="control-panel">
                     <div class="card-header">
                         <div>
-                            <h3 class="card-title">🎛️ Emergency Control</h3>
+                            <h3 class="card-title">Emergency Control</h3>
                             <p class="card-subtitle">Trigger accident alert system</p>
                         </div>
                     </div>
                     
                     <form id="emergencyForm">
                         <div class="form-group">
-                            <label class="form-label">🚌 Bus Number</label>
+                            <label class="form-label">Bus Number</label>
                             <select id="busNumber" class="form-select" required>
                                 <option value="">Select bus...</option>
                                 <option value="45">Bus 45 (Paldi ↔ Maninagar)</option>
@@ -769,13 +773,13 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">📍 Accident Location</label>
+                            <label class="form-label">Accident Location</label>
                             <input type="text" id="accidentLocation" class="form-control" 
                                    placeholder="e.g., Near Paldi Bus Stop" required>
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">🗺️ GPS Coordinates</label>
+                            <label class="form-label">GPS Coordinates</label>
                             <input type="number" id="latitude" class="form-control" 
                                    placeholder="Latitude (e.g., 23.0225)" step="any" required>
                             <input type="number" id="longitude" class="form-control" 
@@ -783,7 +787,7 @@
                         </div>
                         
                         <button type="submit" id="emergencyBtn" class="btn-emergency">
-                            🚨 Trigger Emergency Alert
+                            TRIGGER EMERGENCY ALERT
                         </button>
                     </form>
                     
@@ -792,18 +796,18 @@
                     </div>
                     
                     <div class="info-box">
-                        <p><strong>📋 System Features:</strong></p>
-                        <p>✅ Instant GPS freeze</p>
-                        <p>✅ Broadcast to all users</p>
-                        <p>✅ Notify passengers</p>
-                        <p>✅ Alert helplines</p>
+                        <p><strong>System Features:</strong></p>
+                        <p>— Instant GPS freeze</p>
+                        <p>— Broadcast to all users</p>
+                        <p>— Notify passengers</p>
+                        <p>— Alert helplines</p>
                     </div>
                 </div>
                 
                 <!-- Statistics Card -->
                 <div class="dashboard-card" style="margin-top: 20px;">
                     <div class="card-header">
-                        <h3 class="card-title">📈 Statistics</h3>
+                        <h3 class="card-title">Statistics</h3>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="info-box" style="border-color: #3b82f6;">
@@ -895,16 +899,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const longitude = document.getElementById('longitude').value;
         
         if (!busNumber || !accidentLocation || !latitude || !longitude) {
-            showStatus('error', '❌ Please fill in all fields');
+            showStatus('error', 'Please fill in all fields');
             return;
         }
         
         // Show processing status
         emergencyBtn.classList.add('processing');
-        emergencyBtn.innerHTML = '🔄 ACTIVATING EMERGENCY SYSTEM...';
+        emergencyBtn.innerHTML = 'ACTIVATING EMERGENCY SYSTEM...';
         emergencyBtn.disabled = true;
         
-        showStatus('processing', '🚨 Emergency system activating...<br>📧 Sending notifications...');
+        showStatus('processing', 'Emergency system activating...<br>Sending notifications...');
         
         // Send emergency alert
         fetch('/api/emergency-accident/', {
@@ -927,37 +931,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 const details = data.accident_details;
                 
                 let successHtml = `
-                    <h5>✅ EMERGENCY SYSTEM ACTIVATED SUCCESSFULLY</h5>
+                    <h5>EMERGENCY SYSTEM ACTIVATED</h5>
                     <div class="notification-summary">
-                        <h6>📊 Notification Summary:</h6>
+                        <h6>Notification Summary:</h6>
                         <div class="notification-item">
-                            <span>📧 Total Emails Sent:</span>
+                            <span>Total Emails Sent:</span>
                             <strong>${response.notifications_sent}</strong>
                         </div>
                         <div class="notification-item">
-                            <span>👥 Affected Passengers:</span>
+                            <span>Affected Passengers:</span>
                             <strong>${response.affected_passengers}</strong>
                         </div>
                         <div class="notification-item">
-                            <span>📧 Broadcast Alerts:</span>
+                            <span>Broadcast Alerts:</span>
                             <strong>${response.broadcast_alerts_sent || response.family_alerts_sent}</strong>
                         </div>
                         <div class="notification-item">
-                            <span>🚨 Helpline Alerts:</span>
+                            <span>Helpline Alerts:</span>
                             <strong>${response.helpline_alerts_sent}</strong>
                         </div>
                         <div class="notification-item">
-                            <span>🚌 Bus Status:</span>
+                            <span>Bus Status:</span>
                             <strong>${response.bus_status}</strong>
                         </div>
                         <div class="notification-item">
-                            <span>📍 Location Frozen:</span>
+                            <span>Location Frozen:</span>
                             <strong>${response.location_frozen ? 'YES' : 'NO'}</strong>
                         </div>
                     </div>
                     
                     <div class="mt-3">
-                        <h6>🚨 Accident Details:</h6>
+                        <h6>Accident Details:</h6>
                         <p><strong>Bus:</strong> ${details.bus_number}</p>
                         <p><strong>Route:</strong> ${details.route}</p>
                         <p><strong>Location:</strong> ${details.location}</p>
@@ -967,7 +971,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     <div class="mt-4 text-center">
                         <div class="alert alert-info">
-                            <h6>🚨 Refreshing Emergency Dashboard...</h6>
+                            <h6>Refreshing Emergency Dashboard...</h6>
                             <p class="mb-0">Page will refresh in <span id="countdown">5</span> seconds to show emergency status</p>
                             <button id="redirectNow" class="btn btn-primary btn-sm mt-2">Refresh Now</button>
                         </div>
@@ -979,19 +983,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Show success animation
                 emergencyBtn.classList.remove('processing');
                 emergencyBtn.classList.add('pulse-animation');
-                emergencyBtn.innerHTML = '✅ EMERGENCY SYSTEM ACTIVATED';
+                emergencyBtn.innerHTML = 'EMERGENCY SYSTEM ACTIVATED';
                 
                 // Start countdown and redirect
                 startRedirectCountdown();
                 
             } else {
-                showStatus('error', `❌ Emergency system failed: ${data.message}`);
+                showStatus('error', `Emergency system failed: ${data.message}`);
                 resetButton();
             }
         })
         .catch(error => {
             console.error('Emergency system error:', error);
-            showStatus('error', `❌ System error: ${error.message}`);
+            showStatus('error', `System error: ${error.message}`);
             resetButton();
         });
     }
@@ -1025,7 +1029,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function redirectToEmergencyDashboard() {
         // Show redirect message
-        showStatus('processing', '🚨 Refreshing Emergency Dashboard...');
+        showStatus('processing', 'Refreshing Emergency Dashboard...');
         
         // Refresh the current page to show updated emergency status
         setTimeout(() => {
@@ -1044,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function resetButton() {
         emergencyBtn.classList.remove('processing', 'pulse-animation');
-        emergencyBtn.innerHTML = '🚨 TRIGGER EMERGENCY ALERT SYSTEM 🚨';
+        emergencyBtn.innerHTML = 'TRIGGER EMERGENCY ALERT';
         emergencyBtn.disabled = false;
     }
     

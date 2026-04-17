@@ -115,17 +115,17 @@ class EmergencyNotificationSystem:
             timestamp = datetime.now().strftime('%d/%m/%Y at %I:%M %p')
             
             # Email content for affected passengers
-            passenger_subject = f"🚨 URGENT: Bus Accident Alert - Bus {bus_number}"
+            passenger_subject = f"URGENT: Bus Accident Alert - Bus {bus_number}"
             passenger_message = f"""EMERGENCY NOTIFICATION - AMTS
 
-🚨 ACCIDENT ALERT 🚨
+ACCIDENT ALERT
 
 An accident involving Bus {bus_number} has been reported.
 
-📍 Location: {location_str}
-🚌 Bus Number: {bus_number}
-🛣️ Route: {route_name}
-⏰ Time: {timestamp}
+Location: {location_str}
+Bus Number: {bus_number}
+Route: {route_name}
+Time: {timestamp}
 
 If you or your family member was traveling on this bus, please:
 1. Contact emergency services: 108
@@ -137,11 +137,10 @@ AMTS is coordinating with emergency services for immediate assistance.
 Stay safe,
 AMTS Emergency Response Team"""
 
-            # Email content for emergency helplines (PRIORITY EMAILS ONLY)
-            helpline_subject = f"🚨 BUS ACCIDENT REPORT - Bus {bus_number} - Immediate Response Required"
+            helpline_subject = f"BUS ACCIDENT REPORT - Bus {bus_number} - Immediate Response Required"
             helpline_message = f"""EMERGENCY INCIDENT REPORT - AMTS
 
-🚨 BUS ACCIDENT DETECTED 🚨
+BUS ACCIDENT DETECTED
 
 INCIDENT DETAILS:
 - Bus Number: {bus_number}
